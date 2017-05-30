@@ -32,5 +32,3 @@ $M2/mvn --version
 
 # if you get error then un comment the following line
 $M2/mvn -s settings.xml package
-
-nohup java -Xms384m -Xmx412m -jar target/*.jar --server.port=${OPENSHIFT_DIY_PORT} --server.address=${OPENSHIFT_DIY_IP} --spring.profiles.active=openshift &
