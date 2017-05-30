@@ -2,13 +2,11 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,6 +17,7 @@ import util.PassEncoder;
 
 public class Usuario implements UserDetails {
 	
+	@Id
 	private Long id;
 	private String username;
 	private String password; //nota va a ser un salted hash a futuro?

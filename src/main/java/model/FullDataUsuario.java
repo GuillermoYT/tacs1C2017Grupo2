@@ -1,11 +1,13 @@
 package model;
 
-import repos.RepoMoviesLists;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import tacs.MovieListRepository;
 
 /**
  * Created by jon on 16/04/17.
@@ -19,9 +21,12 @@ public class FullDataUsuario {
     private Rol rol;
     private List<SummaryActor> actoresFavoritos;
     private Date ultimaSesion;
+    
+    @Autowired
+    private MovieListRepository repoML;
 
     public FullDataUsuario(Usuario user) {
-        listaMovieList = RepoMoviesLists.getInstance().getAllMovieLists().stream().filter(movieList -> movieList.getOwnerId()==user.getId()).collect(Collectors.toList());
+        listaMovieList = repoML.findAll().stream().filter(movieList -> movieList.getOwnerId()==user.getId()).collect(Collectors.toList());
         id = user.getId();
         username = user.getUsername();
         password = user.getPassword();

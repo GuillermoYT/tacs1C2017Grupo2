@@ -1,8 +1,10 @@
 package model;
 
+import org.springframework.data.annotation.Id;
 
 public class Rol {
 
+	@Id
 	private int id;
 	private String name;
 	

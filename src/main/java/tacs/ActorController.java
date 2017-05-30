@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,13 +23,15 @@ import model.Actor;
 import model.FavoritoActor;
 import model.SummaryActor;
 import model.Usuario;
-import repos.RepoUsuarios;
 import util.FavComparator;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/actores")
 public class ActorController extends AbstractController {
+	
+	@Autowired
+	private UsuarioRepository userRepo;
 
 	// Lista de actores
 	//@PreAuthorize(value = "hasRole('ROLE_ADMIN')")
@@ -66,7 +69,7 @@ public class ActorController extends AbstractController {
 	public List<FavoritoActor> rankingActores(){
 		logger.info("rankingActores()");
 		List<FavoritoActor> rankingActores = new ArrayList<FavoritoActor>();
-		List<Usuario> usuarios = RepoUsuarios.getInstance().getAllUsuarios();
+		List<Usuario> usuarios = userRepo.findAll();
 		Set<SummaryActor> actoresYaPresentes = new HashSet<SummaryActor>();
 		for(Usuario u : usuarios) {
 			for(SummaryActor a : u.getIdsActoresFavoritos()) {

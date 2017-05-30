@@ -1,12 +1,16 @@
 package model;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.springframework.data.annotation.Id;
+
 public class MovieList {
 	
-	private Long id;
+	@Id
+	private String id;
 	private String nombre;
 	private Long ownerId; //Usuario
 	private List<Pelicula> listaPeliculas;
@@ -21,11 +25,11 @@ public class MovieList {
 		listaPeliculas = new ArrayList<Pelicula>();
 	}
 	
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 	
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public String getNombre() {

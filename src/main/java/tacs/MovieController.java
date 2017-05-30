@@ -1,13 +1,11 @@
 package tacs;
 
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,23 +14,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import apiResult.ActorCastResult;
-import apiResult.MovieActor;
 import apiResult.MovieCastResult;
-import apiResult.MovieCredits;
 import apiResult.MovieDetailResult;
 import apiResult.MovieListResult;
 import apiResult.MovieResult;
 import model.MovieDetail;
 import model.Pelicula;
-import model.Response;
-import repos.RepoMoviesLists;
-import repos.RepoUsuarios;
 import util.General;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/peliculas")
 public class MovieController extends AbstractController{
+	
+	@Autowired
+	private UsuarioRepository userRepo;
 	
 	//Buscar peliculas, si no se especifica un filtro trae las populares del momento
 	@RequestMapping(method = RequestMethod.GET)
@@ -67,7 +63,7 @@ public class MovieController extends AbstractController{
 		
 		List<Integer> idsActoresFavoritosList = new ArrayList<Integer>();
 		try {
-			RepoUsuarios.getInstance().getUserById(usuario).getIdsActoresFavoritos().forEach((af)->idsActoresFavoritosList.add(af.getId()));
+			userRepo.findById(usuario).getIdsActoresFavoritos().forEach((af)->idsActoresFavoritosList.add(af.getId()));
 		} catch(Exception e) {
 			logger.error("Error pasando los ids de int a long!");
 		}
