@@ -157,7 +157,7 @@
 			<!-- By default that is to put the resulting archive into the 'webapps' 
 				folder. -->
 			<!-- http://maven.apache.org/guides/mini/guide-building-for-different-environments.html -->
-			<id>openshift</id>
+			<!--<id>openshift</id>
 			<build>
 				<finalName>template</finalName>
 				<plugins>
@@ -170,7 +170,7 @@
 						</configuration>
 					</plugin>
 				</plugins>
-			</build>
+			</build>-->
 		</profile>
 	</profiles>
 </project>
