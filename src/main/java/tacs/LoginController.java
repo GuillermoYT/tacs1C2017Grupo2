@@ -22,8 +22,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import model.Usuario;
-import security.JwtAuthenticationRequest;
-import security.JwtAuthenticationResponse;
 
 
 @RestController
