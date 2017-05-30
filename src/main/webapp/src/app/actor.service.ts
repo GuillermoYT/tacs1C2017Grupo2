@@ -13,8 +13,10 @@ import { UserData } from './model/user-data';
 @Injectable()
 export class ActorService {
 
+  baseUrl = 'http://ruta-rest-tacs.7e14.starter-us-west-2.openshiftapps.com';
+
   getActor(id: number): Promise<Actor> {
-    let url = `http://localhost:8080/actores/${id}`;
+    let url = this.baseUrl+`/actores/${id}`;
     return this.http.get(url)
       .toPromise()
       .then(response =>
@@ -23,7 +25,7 @@ export class ActorService {
   }
 
   getActorByString(query: string): Promise<SummaryActor[]> {
-    let url= `http://localhost:8080/actores?query=${query}`;
+    let url= this.baseUrl+`/actores?query=${query}`;
     return this.http.get(url)
       .toPromise()
       .then(response => response.json() as SummaryActor[])
@@ -32,7 +34,7 @@ export class ActorService {
 
   getActoresFavoritos(): Promise<ActorFavorito[]> {
     let headers = new Headers({'Authorization': 'Bearer '+this.userData.getToken()});
-    let url = `http://localhost:8080/actores/rankingFavoritos`;
+    let url = this.baseUrl+`/actores/rankingFavoritos`;
     return this.http.get(url, {headers: headers})
       .toPromise()
       .then(response => response.json() as ActorFavorito[])

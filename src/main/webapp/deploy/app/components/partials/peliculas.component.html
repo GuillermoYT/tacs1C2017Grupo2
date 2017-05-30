@@ -1,0 +1,71 @@
+<h1>Busqueda: </h1>
+<div class="row">
+  <input [(ngModel)]="searchString" placeholder="Ingrese texto a buscar..." class=""/>
+</div>
+<form action="#" style="margin-bottom: 2%">
+  <p>
+    <input name="group1" type="radio" id="pelis" checked [(ngModel)]="queBuscarRadio" value="1"/>
+    <label for="pelis">Peliculas</label>
+  </p>
+  <p>
+    <input name="group1" type="radio" id="actores" [(ngModel)]="queBuscarRadio" value="2"/>
+    <label for="actores">Actores</label>
+  </p>
+  <p>
+    <input name="group1" type="radio" id="ambos"  [(ngModel)]="queBuscarRadio" value="3"/>
+    <label for="ambos">Peliculas y actores</label>
+  </p>
+</form>
+
+<button (click)="searchClick()" class="btn waves-effect black-text">Buscar</button>
+<button (click)="searchReset()" class="btn waves-effect black-text">Limpiar busqueda</button>
+
+<div class="container" *ngIf="movies">
+<ul class="movies black-text">
+  <li *ngFor="let movie of movies">
+  <div class="row">
+    <div class="card horizontal teal lighten-2">
+      <div class="card-image">
+      <img src="{{movie.imagePath}}"/><br/>
+      </div>
+      <div class="card-stacked">
+      <div class="card-content">
+        <span class="card-title center-align"><a class="blue-text text-darken-4" [routerLink]="['/pelicula', movie.id]">{{movie.nombre}}</a> ({{movie.anioEstreno}})</span>
+        <span class="valign-wrapper">{{movie.descripcion}}</span>
+		<br>
+		<br>
+		<div class="right-align">
+		  <br>
+		  <select class="browser-default">
+			<option>Agregar a lista:</option>
+			<option (click)="addToMovieList(movieList.id, movie.id)" *ngFor="let movieList of movieLists">{{movieList.nombre}}</option>
+		  </select> 
+		</div>
+      </div>
+      </div>
+    </div>
+  </div>
+  </li>
+</ul>
+</div>
+
+<div class="container" *ngIf="actores">
+<ul class="actores black-text">
+  <li *ngFor="let actor of actores">
+  <div class="row">
+    <div class="card horizontal teal lighten-2">
+      <div class="card-image">
+      <div *ngIf="actor.imagePath">
+        <img src="{{actor.imagePath}}"/><br/>
+      </div>
+      </div>
+      <div class="card-stacked">
+      <div class="card-content valign-wrapper">
+        <span class="card-title center-align"><a class="blue-text text-darken-4" [routerLink]="['/actor', actor.id]">{{actor.nombre}}</a></span>
+      </div>
+      </div>
+    </div>
+  </div>
+  </li>
+</ul>
+</div>

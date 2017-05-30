@@ -1,0 +1,120 @@
+
+
+
+<div>
+	<h1>Crear lista: </h1>
+	<input name="nombre" [(ngModel)]="nombreLista" required placeholder="Ingrese nombre de la lista" class=""/>
+
+	<button (click)="crearClick()" class="btn waves-effect black-text">Crear Lista</button>
+	<button (click)="textReset()" class="btn waves-effect black-text">Limpiar nombre</button>
+</div> 
+
+<hr style="color: #0056b2;" />
+<hr style="color: #0056b2;" />	
+
+<h1>Listas</h1>
+<button (click)="verListas()" class="btn waves-effect black-text">Ver listas de peliculas</button>  
+<button (click)="verActoresFavoritos()" class="btn waves-effect black-text">Ver actores favoritos</button> 
+<button (click)="verPeliculasVariosActoresFavoritos()" class="btn waves-effect black-text">Ver peliculas con varios actores favoritos</button>
+
+<div class="container" *ngIf="movieLists">
+	<ul class="movieLists black-text">
+		<li *ngFor="let movieList of movieLists">
+			<div class="row">
+				<div class="card horizontal teal lighten-2">
+				  <div class="card-stacked">
+					<div class="card-content">
+						<span class="card-title center-align"><a class="blue-text text-darken-4" [routerLink]="['/movielists/', movieList.id]">{{movieList.nombre}}</a></span>
+					</div>
+				  </div>
+				</div>
+			</div>
+		</li>
+	</ul>
+</div>
+
+<div class="container" *ngIf="actoresFavoritos">
+	<ul class="actoresFavoritos black-text">
+		<li *ngFor="let actor of actoresFavoritos">
+			<div class="row">
+				<div class="card horizontal teal lighten-2">
+				  <div class="card-stacked">
+					<div class="card-content">
+						<span class="card-title center-align"><a class="blue-text text-darken-4" [routerLink]="['/actor', actor.id]">{{actor.nombre}}</a></span>
+					</div>
+				  </div>
+				</div>
+			</div>
+		</li>
+	</ul>	
+</div>
+
+<div class="container" *ngIf="peliculasActoresFavoritos">
+	<ul class="peliculasFavoritos black-text">
+		<li *ngFor="let pelicula of peliculasActoresFavoritos">
+			<div class="row">
+				<div class="card horizontal teal lighten-2">
+				  <div class="card-stacked">
+					<div class="card-content">
+						<span class="card-title center-align"><a class="blue-text text-darken-4" [routerLink]="['/pelicula', pelicula.id]">{{pelicula.nombre}}</a></span>
+					</div>
+				  </div>
+				</div>
+			</div>
+		</li>
+	</ul>	
+</div>
+
+<div class="container" *ngIf="!encontro">
+	<br>
+	<div class="row">
+		<div class="card horizontal teal lighten-2">
+		  <div class="card-stacked">
+			<div class="card-content">
+				<span class="card-title center-align"><a class="blue-text text-darken-4">No se encontraron resultados</a></span>
+			</div>
+		  </div>
+		</div>
+	</div>
+</div>
+			
+<hr style="color: #0056b2;" />
+<hr style="color: #0056b2;" />	
+
+<h1>Peliculas en comun</h1>
+<div class="well">
+	<p>Lista 1</p>
+	<select class="browser-default  black-text">
+		<option (click)="setLista1(null)">Seleccione una lista</option>
+		<option (click)="setLista1(movielist.id)" *ngFor="let movielist of dropDownMovieLists">{{movielist.nombre}}</option>
+	</select> 
+
+</div>
+<div class="well">
+	<p>Lista 2</p>
+	<select class="browser-default black-text">
+		<option (click)="setLista2(null)">Seleccione una lista</option>
+		<option (click)="setLista2(movielist.id)" *ngFor="let movielist of dropDownMovieLists">{{movielist.nombre}}</option>
+	</select> 
+</div>
+
+<button (click)="verInterseccion()" class="btn waves-effect black-text">Ver peliculas en comun</button>
+
+<ul>
+	<li *ngFor="let pelicula of movieListService.results">
+		<div class="row">
+			<div class="card horizontal teal lighten-2">
+				<div class="card-stacked">
+					<div class="card-content">
+						<span class="card-title center-align"><a class="blue-text text-darken-4" [routerLink]="['/pelicula/', pelicula.id]">{{pelicula.nombre}}</a></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</li>
+</ul>
+
+
+
+
+

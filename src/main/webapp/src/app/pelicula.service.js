@@ -14,22 +14,23 @@ require("rxjs/add/operator/toPromise");
 var PeliculaService = (function () {
     function PeliculaService(http) {
         this.http = http;
+        this.baseUrl = 'http://ruta-rest-tacs.7e14.starter-us-west-2.openshiftapps.com';
     }
     PeliculaService.prototype.getMovies = function () {
-        return this.http.get('http://localhost:8080/peliculas')
+        return this.http.get(this.baseUrl + '/peliculas')
             .toPromise()
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
     PeliculaService.prototype.getMovie = function (id) {
-        var url = "http://localhost:8080/peliculas/" + id;
+        var url = this.baseUrl + ("/peliculas/" + id);
         return this.http.get(url)
             .toPromise()
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
     PeliculaService.prototype.getMoviesByString = function (query) {
-        var url = "http://localhost:8080/peliculas?query=" + query;
+        var url = this.baseUrl + ("/peliculas?query=" + query);
         return this.http.get(url)
             .toPromise()
             .then(function (response) { return response.json(); })

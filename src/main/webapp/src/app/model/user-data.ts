@@ -7,6 +7,10 @@ export class UserData {
   id: number;
   admin: boolean;
 
+  constructor() {
+    this.setId(0);
+  }
+
   setToken(unString: string): void {
     this.token = unString;
   }
@@ -43,6 +47,6 @@ export class UserData {
     this.token = null;
     this.username = null;
     this.admin = false;
-    this.id = null;
+    this.id = 0;
   }
 }

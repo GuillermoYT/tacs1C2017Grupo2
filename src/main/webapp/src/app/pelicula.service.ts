@@ -7,15 +7,18 @@ import { MovieDetail } from './model/movie-detail';
 
 @Injectable()
 export class PeliculaService {
+
+  baseUrl = 'http://ruta-rest-tacs.7e14.starter-us-west-2.openshiftapps.com';
+
   getMovies(): Promise<Pelicula[]> {
-    return this.http.get('http://localhost:8080/peliculas')
+    return this.http.get(this.baseUrl+'/peliculas')
       .toPromise()
       .then(response => response.json() as Pelicula[])
       .catch(this.handleError);
   }
 
   getMovie(id: number): Promise<MovieDetail> {
-    let url = `http://localhost:8080/peliculas/${id}`;
+    let url = this.baseUrl+`/peliculas/${id}`;
     return this.http.get(url)
       .toPromise()
       .then(response => response.json() as MovieDetail)
@@ -23,7 +26,7 @@ export class PeliculaService {
   }
 
   getMoviesByString(query: string): Promise<Pelicula[]> {
-    let url= `http://localhost:8080/peliculas?query=${query}`;
+    let url= this.baseUrl+`/peliculas?query=${query}`;
     return this.http.get(url)
       .toPromise()
       .then(response => response.json() as Pelicula[])

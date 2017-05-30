@@ -13,8 +13,10 @@ import { UserData } from './model/user-data';
 export class UsuarioService {
     constructor(private http: Http, private userData: UserData) { }
 
+    baseUrl = 'http://ruta-rest-tacs.7e14.starter-us-west-2.openshiftapps.com';
+
     authenticate(username: string, password: string): Promise<boolean> {
-      let url = 'http://localhost:8080/auth';
+      let url = this.baseUrl+'/auth';
       let headers = new Headers;
       headers.append('Content-Type', 'application/json');
       let body = {
@@ -38,7 +40,7 @@ export class UsuarioService {
     }
 
     register(username: string, password: string): Promise<boolean> {
-      let url = 'http://localhost:8080/usuarios';
+      let url = this.baseUrl+'/usuarios';
       let headers = new Headers;
       headers.append('Content-Type', 'application/json');
       let body = {
@@ -59,7 +61,7 @@ export class UsuarioService {
     }
 
     getUsuarios(): Promise<Usuario[]> {
-        let url = `http://localhost:8080/usuarios`;
+        let url = this.baseUrl+`/usuarios`;
         return this.http.get(url)
             .toPromise()
             .then(response => response.json() as Usuario[])
@@ -67,7 +69,7 @@ export class UsuarioService {
     }
 
     getUsuario(id: number): Promise<UsuarioDetail> {
-        let url = `http://localhost:8080/usuarios/${id}`;
+        let url = this.baseUrl+`/usuarios/${id}`;
         return this.http.get(url)
             .toPromise()
             .then(response => response.json() as UsuarioDetail)
@@ -75,7 +77,7 @@ export class UsuarioService {
     }
 
     getFavoritos(id: number): Promise<SummaryActor[]> {
-        let url = `http://localhost:8080/usuarios/${id}/actoresFavoritos`;
+        let url = this.baseUrl+`/usuarios/${id}/actoresFavoritos`;
         return this.http.get(url)
             .toPromise()
             .then(response => response.json() as SummaryActor[])
@@ -83,7 +85,7 @@ export class UsuarioService {
     }
 
     actorFavorito(idActor: number): Promise<BooleanObj>{
-        let url = `http://localhost:8080/usuarios/2/actorFavorito/${idActor}`;
+        let url = this.baseUrl+`/usuarios/${this.userData.id}/actorFavorito/${idActor}`;
         return this.http.get(url).toPromise()
         .then(response => response.json() as BooleanObj).catch(this.handleError);
     }
@@ -92,14 +94,14 @@ export class UsuarioService {
         let headers = new Headers;
         headers.append('Content-Type', 'application/json');
 
-        let url = `http://localhost:8080/usuarios/2/favorito/${idActor}`;
+        let url = this.baseUrl+`/usuarios/${this.userData.id}/favorito/${idActor}`;
         this.http.put(url, null, headers ).toPromise().then()
         .catch(this.handleError);
         console.log("macarFavorito: "+idActor);
     }
 
     desmarcarFavorito(idActor: number){
-        let url = `http://localhost:8080/usuarios/2/favorito/${idActor}`;
+        let url = this.baseUrl+`/usuarios/${this.userData.id}/favorito/${idActor}`;
         this.http.delete(url).toPromise().then()
         .catch(this.handleError);
         console.log("desmacarFavorito: "+idActor);

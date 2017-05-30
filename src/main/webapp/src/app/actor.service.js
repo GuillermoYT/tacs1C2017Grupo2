@@ -18,9 +18,10 @@ var ActorService = (function () {
         this.http = http;
         this.usuarioService = usuarioService;
         this.userData = userData;
+        this.baseUrl = 'http://ruta-rest-tacs.7e14.starter-us-west-2.openshiftapps.com';
     }
     ActorService.prototype.getActor = function (id) {
-        var url = "http://localhost:8080/actores/" + id;
+        var url = this.baseUrl + ("/actores/" + id);
         return this.http.get(url)
             .toPromise()
             .then(function (response) {
@@ -29,7 +30,7 @@ var ActorService = (function () {
             .catch(this.handleError);
     };
     ActorService.prototype.getActorByString = function (query) {
-        var url = "http://localhost:8080/actores?query=" + query;
+        var url = this.baseUrl + ("/actores?query=" + query);
         return this.http.get(url)
             .toPromise()
             .then(function (response) { return response.json(); })
@@ -37,7 +38,7 @@ var ActorService = (function () {
     };
     ActorService.prototype.getActoresFavoritos = function () {
         var headers = new http_1.Headers({ 'Authorization': 'Bearer ' + this.userData.getToken() });
-        var url = "http://localhost:8080/actores/rankingFavoritos";
+        var url = this.baseUrl + "/actores/rankingFavoritos";
         return this.http.get(url, { headers: headers })
             .toPromise()
             .then(function (response) { return response.json(); })

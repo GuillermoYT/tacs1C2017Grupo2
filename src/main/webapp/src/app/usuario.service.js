@@ -16,10 +16,11 @@ var UsuarioService = (function () {
     function UsuarioService(http, userData) {
         this.http = http;
         this.userData = userData;
+        this.baseUrl = 'http://ruta-rest-tacs.7e14.starter-us-west-2.openshiftapps.com';
     }
     UsuarioService.prototype.authenticate = function (username, password) {
         var _this = this;
-        var url = 'http://localhost:8080/auth';
+        var url = this.baseUrl + '/auth';
         var headers = new http_1.Headers;
         headers.append('Content-Type', 'application/json');
         var body = {
@@ -42,42 +43,63 @@ var UsuarioService = (function () {
         })
             .catch(this.handleError);
     };
+    UsuarioService.prototype.register = function (username, password) {
+        var url = this.baseUrl + '/usuarios';
+        var headers = new http_1.Headers;
+        headers.append('Content-Type', 'application/json');
+        var body = {
+            "username": username,
+            "password": password
+        };
+        return this.http.post(url, body, headers)
+            .toPromise()
+            .then(function (response) {
+            var respuesta = response.json();
+            if (respuesta) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        })
+            .catch(this.handleError);
+    };
     UsuarioService.prototype.getUsuarios = function () {
-        var url = "http://localhost:8080/usuarios";
+        var url = this.baseUrl + "/usuarios";
         return this.http.get(url)
             .toPromise()
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
     UsuarioService.prototype.getUsuario = function (id) {
-        var url = "http://localhost:8080/usuarios/" + id;
+        var url = this.baseUrl + ("/usuarios/" + id);
         return this.http.get(url)
             .toPromise()
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
     UsuarioService.prototype.getFavoritos = function (id) {
-        var url = "http://localhost:8080/usuarios/" + id + "/actoresFavoritos";
+        var url = this.baseUrl + ("/usuarios/" + id + "/actoresFavoritos");
         return this.http.get(url)
             .toPromise()
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
     UsuarioService.prototype.actorFavorito = function (idActor) {
-        var url = "http://localhost:8080/usuarios/2/actorFavorito/" + idActor;
+        var url = this.baseUrl + ("/usuarios/" + this.userData.id + "/actorFavorito/" + idActor);
         return this.http.get(url).toPromise()
             .then(function (response) { return response.json(); }).catch(this.handleError);
     };
     UsuarioService.prototype.marcarFavorito = function (idActor) {
         var headers = new http_1.Headers;
         headers.append('Content-Type', 'application/json');
-        var url = "http://localhost:8080/usuarios/2/favorito/" + idActor;
+        var url = this.baseUrl + ("/usuarios/" + this.userData.id + "/favorito/" + idActor);
         this.http.put(url, null, headers).toPromise().then()
             .catch(this.handleError);
         console.log("macarFavorito: " + idActor);
     };
     UsuarioService.prototype.desmarcarFavorito = function (idActor) {
-        var url = "http://localhost:8080/usuarios/2/favorito/" + idActor;
+        var url = this.baseUrl + ("/usuarios/" + this.userData.id + "/favorito/" + idActor);
         this.http.delete(url).toPromise().then()
             .catch(this.handleError);
         console.log("desmacarFavorito: " + idActor);
