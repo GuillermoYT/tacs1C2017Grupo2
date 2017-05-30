@@ -1,6 +1,6 @@
 import 'rxjs/add/operator/switchMap';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { UsuarioDetail } from '../model/usuario-detail';
@@ -41,6 +41,7 @@ import { SummaryActor } from '../model/summary-actor';
                 </li>
             </div>
         </div>
+        <button (click)="volver()">Volver</button>
     </div>
     `,
     styles: [`
@@ -54,7 +55,8 @@ export class UsuarioDetailComponent implements OnInit {
     constructor(
         private usuarioService: UsuarioService,
         private route: ActivatedRoute,
-        private location: Location
+        private location: Location,
+        private router: Router
     ) { }
 
     ngOnInit(): void {
@@ -65,5 +67,9 @@ export class UsuarioDetailComponent implements OnInit {
 
     goBack(): void {
         this.location.back();
+    }
+
+    volver(): void{
+        this.router.navigate(['/listaUsuarios']);
     }
 }

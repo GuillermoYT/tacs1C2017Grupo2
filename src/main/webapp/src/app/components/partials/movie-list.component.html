@@ -84,7 +84,7 @@
 <h1>Peliculas en comun</h1>
 <div class="well">
 	<p>Lista 1</p>
-	<select class="browser-default">
+	<select class="browser-default  black-text">
 		<option (click)="setLista1(null)">Seleccione una lista</option>
 		<option (click)="setLista1(movielist.id)" *ngFor="let movielist of dropDownMovieLists">{{movielist.nombre}}</option>
 	</select> 
@@ -92,7 +92,7 @@
 </div>
 <div class="well">
 	<p>Lista 2</p>
-	<select class="browser-default">
+	<select class="browser-default black-text">
 		<option (click)="setLista2(null)">Seleccione una lista</option>
 		<option (click)="setLista2(movielist.id)" *ngFor="let movielist of dropDownMovieLists">{{movielist.nombre}}</option>
 	</select> 

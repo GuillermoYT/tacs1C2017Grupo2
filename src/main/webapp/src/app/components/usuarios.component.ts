@@ -26,12 +26,6 @@ import { UsuarioService } from '.././usuario.service'
     background-color: #CFD8DC !important;
     color: white;
     }
-    .heroes {
-    margin: 0 0 2em 0;
-    list-style-type: none;
-    padding: 0;
-    width: 15em;
-    }
     `]
 })
 

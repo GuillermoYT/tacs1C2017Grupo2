@@ -101,6 +101,7 @@ public class Usuario implements UserDetails {
 		});
 	}
 
+	@JsonIgnore
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		Collection<GrantedAuthority> auths = 

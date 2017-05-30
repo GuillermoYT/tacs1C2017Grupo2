@@ -17,8 +17,8 @@ import { UserData } from './model/user-data';
        <a href="#" class="brand-logo black-text right" style="margin-right:10%">{{userData.getUsername()}} - Show Must Go On</a>
        <ul id="nav-mobile" class="left hide-on-med-and-down" style="margin-left:5%;">
          <li><a class="black-text" routerLink="/">Inicio</a></li>
-         <li><a class="black-text" routerLink="/misListas">Mis Listas</a></li>
-         <li><a class="black-text" routerLink="/listaUsuarios">Usuarios</a></li>
+         <li *ngIf="userData.getUsername()"><a class="black-text" routerLink="/misListas">Mis Listas</a></li>
+         <li *ngIf="userData.isAdmin()"><a class="black-text" routerLink="/listaUsuarios">Usuarios</a></li>
          <li *ngIf="userData.isAdmin()"><a class="black-text" routerLink="/actoresFavoritos">Ranking de actores favoritos</a></li>
          <li *ngIf="!userData.getUsername()"><a class="black-text" routerLink="/login">Iniciar sesion</a></li>
          <li *ngIf="userData.getUsername()"><a class="black-text" (click)="doLogout()">Cerrar sesión</a></li>

@@ -37,6 +37,27 @@ export class UsuarioService {
         .catch(this.handleError);
     }
 
+    register(username: string, password: string): Promise<boolean> {
+      let url = 'http://localhost:8080/usuarios';
+      let headers = new Headers;
+      headers.append('Content-Type', 'application/json');
+      let body = {
+        "username": username,
+        "password": password
+      }
+      return this.http.post(url, body, headers)
+        .toPromise()
+        .then(response => {
+          let respuesta = response.json();
+          if (respuesta) {
+            return true;
+          } else {
+            return false;
+          }
+        })
+        .catch(this.handleError);
+    }
+
     getUsuarios(): Promise<Usuario[]> {
         let url = `http://localhost:8080/usuarios`;
         return this.http.get(url)

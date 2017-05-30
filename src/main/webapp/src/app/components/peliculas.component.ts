@@ -6,6 +6,7 @@ import { MovieDetailComponent} from './movie-detail.component';
 import { PeliculaService } from './../pelicula.service';
 import { ActorService } from './../actor.service';
 import { MovieListService } from './../movie-list.service';
+import { UserData } from './../model/user-data';
 
 @Component({
   selector: 'listaPeliculas',
@@ -36,11 +37,8 @@ export class PeliculasComponent implements OnInit {
   }
   
   //muestra las listas de un usuario
-  verListas(): void {
-	  //TEMPORAL
-	  let user = 1;
-	  
-	  this.movieListService.getMovieListsByUser(user).then(movieLists => {this.movieLists = movieLists;});
+  verListas(): void {	  
+	  this.movieListService.getMovieListsByUser(this.userData.getId()).then(movieLists => {this.movieLists = movieLists;});
   }
   
   addToMovieList(idMovieList: number, idMovie: number): void {
@@ -56,8 +54,12 @@ export class PeliculasComponent implements OnInit {
 
   ngOnInit(): void {
     this.getPeliculas();
-    
+	if(this.userData.getId()>0){
+	    this.verListas();
+	}else{
+		console.log('inicie sesion para ver');
+	}
   }
 
-  constructor(private peliculaService: PeliculaService, private actorService: ActorService, private movieListService: MovieListService) { }
+  constructor(private peliculaService: PeliculaService, private actorService: ActorService, private movieListService: MovieListService,  private userData: UserData) { }
 }

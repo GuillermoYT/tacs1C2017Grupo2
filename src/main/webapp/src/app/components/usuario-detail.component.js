@@ -14,10 +14,11 @@ var router_1 = require("@angular/router");
 var common_1 = require("@angular/common");
 var usuario_service_1 = require("../usuario.service");
 var UsuarioDetailComponent = (function () {
-    function UsuarioDetailComponent(usuarioService, route, location) {
+    function UsuarioDetailComponent(usuarioService, route, location, router) {
         this.usuarioService = usuarioService;
         this.route = route;
         this.location = location;
+        this.router = router;
     }
     UsuarioDetailComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -28,17 +29,21 @@ var UsuarioDetailComponent = (function () {
     UsuarioDetailComponent.prototype.goBack = function () {
         this.location.back();
     };
+    UsuarioDetailComponent.prototype.volver = function () {
+        this.router.navigate(['/listaUsuarios']);
+    };
     return UsuarioDetailComponent;
 }());
 UsuarioDetailComponent = __decorate([
     core_1.Component({
         selector: 'usuario-detail',
-        template: "\n    <div *ngIf=\"usuario\">\n            <h2>{{usuario.name}} Detalle de {{usuario.username}}</h2>\n        <div>\n            <label>id: </label>{{usuario.id}}\n        </div>\n        \n        <div>\n            <label>Nombre: </label> {{usuario.username}}\n        </div>\n\n        <div>\n            <label>Cantidad de Listas: </label> {{usuario.listaMovieList.length}}\n        </div>\n\n        <div>\n            <label> Cantidad de Actores Favoritos: </label> {{usuario.actoresFavoritos.length}}\n        </div>\n\n        <div>\n            <label> Ultima Sesion: </label> {{usuario.ultimaSesion | date:'medium' }}\n        </div>\n        <div>\n            <div *ngFor=\"let movieList of usuario.listaMovieList\">\n            <label> Detalle de Lista: </label> \n            <span>{{movieList.nombre}}</span>\n                <li *ngFor=\"let pelicula of movieList.listaPeliculas\">\n                <label> Detalle de Pelicula: </label> \n                <span>{{pelicula.nombre}}</span>\n                </li>\n            </div>\n        </div>\n    </div>\n    ",
+        template: "\n    <div *ngIf=\"usuario\">\n            <h2>{{usuario.name}} Detalle de {{usuario.username}}</h2>\n        <div>\n            <label>id: </label>{{usuario.id}}\n        </div>\n        \n        <div>\n            <label>Nombre: </label> {{usuario.username}}\n        </div>\n\n        <div>\n            <label>Cantidad de Listas: </label> {{usuario.listaMovieList.length}}\n        </div>\n\n        <div>\n            <label> Cantidad de Actores Favoritos: </label> {{usuario.actoresFavoritos.length}}\n        </div>\n\n        <div>\n            <label> Ultima Sesion: </label> {{usuario.ultimaSesion | date:'medium' }}\n        </div>\n        <div>\n            <div *ngFor=\"let movieList of usuario.listaMovieList\">\n            <label> Detalle de Lista: </label> \n            <span>{{movieList.nombre}}</span>\n                <li *ngFor=\"let pelicula of movieList.listaPeliculas\">\n                <label> Detalle de Pelicula: </label> \n                <span>{{pelicula.nombre}}</span>\n                </li>\n            </div>\n        </div>\n        <button (click)=\"volver()\">Volver</button>\n    </div>\n    ",
         styles: ["\n\n    "]
     }),
     __metadata("design:paramtypes", [usuario_service_1.UsuarioService,
         router_1.ActivatedRoute,
-        common_1.Location])
+        common_1.Location,
+        router_1.Router])
 ], UsuarioDetailComponent);
 exports.UsuarioDetailComponent = UsuarioDetailComponent;
 //# sourceMappingURL=usuario-detail.component.js.map

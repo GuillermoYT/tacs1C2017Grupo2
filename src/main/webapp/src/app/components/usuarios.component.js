@@ -37,7 +37,7 @@ UsuariosComponent = __decorate([
     core_1.Component({
         selector: 'listaUsuarios',
         template: "\n    <h2>Usuarios del Sistema</h2>\n    <ul>\n        <li *ngFor=\"let usuario of usuarios\" (click)=\"onSelect(usuario)\"\n      [class.selected]=\"usuario === selectedUsuario\">\n        <span>{{usuario.username}}</span>\n        </li>\n    </ul>\n    <div *ngIf=\"selectedUsuario\">\n        <h2>\n        Usuario {{selectedUsuario.username | uppercase}}\n        </h2>\n        <button (click)=\"verDetalle()\">Ver Detalle</button>\n    </div>\n    ",
-        styles: ["\n    .selected {\n    background-color: #CFD8DC !important;\n    color: white;\n    }\n    .heroes {\n    margin: 0 0 2em 0;\n    list-style-type: none;\n    padding: 0;\n    width: 15em;\n    }\n    "]
+        styles: ["\n    .selected {\n    background-color: #CFD8DC !important;\n    color: white;\n    }\n    "]
     }),
     __metadata("design:paramtypes", [usuario_service_1.UsuarioService,
         router_1.Router])

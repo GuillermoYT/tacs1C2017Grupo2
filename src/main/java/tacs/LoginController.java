@@ -51,7 +51,8 @@ public class LoginController extends AbstractController {
 
     @RequestMapping(value = "/auth", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest) throws AuthenticationException {
-        // Perform the security
+    	logger.info("createAuthenticationToken()");
+    	// Perform the security
         final Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         authenticationRequest.getUsername(),
@@ -71,7 +72,8 @@ public class LoginController extends AbstractController {
 
     @RequestMapping(value = "/authRefresh", method = RequestMethod.GET)
     public ResponseEntity<?> refreshAndGetAuthenticationToken(HttpServletRequest request) {
-        String token = request.getHeader(tokenHeader);
+    	logger.info("refreshAndGetAuthenticationToken()");
+    	String token = request.getHeader(tokenHeader);
         String username = jwtTokenUtil.getUsernameFromToken(token);
         Usuario user = (Usuario) userDetailsService.loadUserByUsername(username);
 

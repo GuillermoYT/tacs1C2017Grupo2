@@ -1,5 +1,7 @@
 package tacs;
 
+import java.util.Date;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,7 +22,8 @@ public class UserServiceImpl implements UserDetailsService {
 		Usuario usuario = RepoUsuarios.getInstance().buscarUsuario(userName);
 		if(usuario == null)
 			throw new UsernameNotFoundException(userName);
-		
+		 Date time = new Date();
+		 usuario.setUltimaSesion(time);
 		return usuario;
 	}
 

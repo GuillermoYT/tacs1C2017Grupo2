@@ -12,11 +12,13 @@ var core_1 = require("@angular/core");
 var pelicula_service_1 = require("./../pelicula.service");
 var actor_service_1 = require("./../actor.service");
 var movie_list_service_1 = require("./../movie-list.service");
+var user_data_1 = require("./../model/user-data");
 var PeliculasComponent = (function () {
-    function PeliculasComponent(peliculaService, actorService, movieListService) {
+    function PeliculasComponent(peliculaService, actorService, movieListService, userData) {
         this.peliculaService = peliculaService;
         this.actorService = actorService;
         this.movieListService = movieListService;
+        this.userData = userData;
     }
     PeliculasComponent.prototype.getPeliculas = function () {
         var _this = this;
@@ -38,9 +40,7 @@ var PeliculasComponent = (function () {
     //muestra las listas de un usuario
     PeliculasComponent.prototype.verListas = function () {
         var _this = this;
-        //TEMPORAL
-        var user = 1;
-        this.movieListService.getMovieListsByUser(user).then(function (movieLists) { _this.movieLists = movieLists; });
+        this.movieListService.getMovieListsByUser(this.userData.getId()).then(function (movieLists) { _this.movieLists = movieLists; });
     };
     PeliculasComponent.prototype.addToMovieList = function (idMovieList, idMovie) {
         this.movieListService.addMovieToList(idMovieList, idMovie);
@@ -53,6 +53,12 @@ var PeliculasComponent = (function () {
     };
     PeliculasComponent.prototype.ngOnInit = function () {
         this.getPeliculas();
+        if (this.userData.getId() > 0) {
+            this.verListas();
+        }
+        else {
+            console.log('inicie sesion para ver');
+        }
     };
     return PeliculasComponent;
 }());
@@ -61,7 +67,7 @@ PeliculasComponent = __decorate([
         selector: 'listaPeliculas',
         templateUrl: './partials/peliculas.component.html',
     }),
-    __metadata("design:paramtypes", [pelicula_service_1.PeliculaService, actor_service_1.ActorService, movie_list_service_1.MovieListService])
+    __metadata("design:paramtypes", [pelicula_service_1.PeliculaService, actor_service_1.ActorService, movie_list_service_1.MovieListService, user_data_1.UserData])
 ], PeliculasComponent);
 exports.PeliculasComponent = PeliculasComponent;
 //# sourceMappingURL=peliculas.component.js.map

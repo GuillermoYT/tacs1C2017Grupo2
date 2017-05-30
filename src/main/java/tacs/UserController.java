@@ -3,6 +3,7 @@ package tacs;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,10 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.JsonObject;
 
 import hierarchyOfExceptions.UserNotFoundException;
-import model.FullDataUsuario;
-import model.Response;
-import model.SummaryActor;
-import model.Usuario;
 import repos.RepoUsuarios;
 import util.BooleanObj;
 
@@ -47,6 +44,7 @@ public class UserController extends AbstractController{
 	@RequestMapping(method = RequestMethod.POST)
 	public Response addUser(@RequestBody Usuario user) {
 		logger.info("addUser()");
+		user.setRol(new Rol("Usuario"));
 		RepoUsuarios.getInstance().addUsuario(user);
 		return new Response(201, "El usuario " + user.getUsername() + " ha sido creado");
 	}

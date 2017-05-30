@@ -35,19 +35,13 @@
 		<br>
 		<br>
 		<div class="right-align">
-		  <button (click)="verListas()" class="btn waves-effect black-text ">Agregar a lista</button>
 		  <br>
-		  <br>
-			<li *ngFor="let movieList of movieLists">
-				<div class="row">
-					<button (click)="addToMovieList(movieList.id, movie.id)" class="btn waves-effect black-text ">{{movieList.nombre}}</button>
-				</div>
-			</li>
+		  <select class="browser-default">
+			<option>Agregar a lista:</option>
+			<option (click)="addToMovieList(movieList.id, movie.id)" *ngFor="let movieList of movieLists">{{movieList.nombre}}</option>
+		  </select> 
 		</div>
-        
-		
       </div>
-	  
       </div>
     </div>
   </div>

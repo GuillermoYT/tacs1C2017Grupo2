@@ -4,3 +4,6 @@
 .settings/
 logs
 /src/main/webapp/node_modules
+.idea
+.js
+.js.map

@@ -4,6 +4,7 @@ import { MovieListService } from './../movie-list.service';
 import { MovieList } from './../model/movie-list';
 import { ActorFavorito } from './../model/actor-favorito';
 import { Pelicula } from './../model/pelicula';
+import { UserData } from './../model/user-data';
 
 @Component({
   selector: 'movie-list',
@@ -21,10 +22,16 @@ export class MovieListComponent implements OnInit {
 
 //crear lista de peliculas 
 crearClick(): void {
-	let user = 1;
-	this.movieListService.createMovieList(this.nombreLista, user);
-	
-	this.nombreLista = "Lista creada exitosamente";
+	if(this.userData.getId()>0){
+		if(this.nombreLista!=''){
+			this.movieListService.createMovieList(this.nombreLista, this.userData.getId());
+			this.nombreLista = "Lista creada exitosamente";
+			this.movieListService.getMovieListsByUser(this.userData.getId())
+			.then(movieLists => {this.dropDownMovieLists = movieLists;});
+		}
+	}else{
+		console.log('inicie sesion para ver');
+	}
 }
 
 textReset(): void {
@@ -36,26 +43,30 @@ verListas(): void {
 	this.actoresFavoritos = null;
 	this.peliculasActoresFavoritos = null;
 	
-	//Para Admin(ve todas)
-	/*
-	  this.movieListService.getMovieLists()
-		.then(movieLists => {if(movieLists.length==0){
-								this.encontro=false;
-							}else{
-								this.movieLists = movieLists;
-								this.encontro=true;
-							});
-    */
-	
-	//Para user: asignar user logueado
-	let user = 1;
-	this.movieListService.getMovieListsByUser(user)
-		.then(movieLists => {if(movieLists.length==0){
-								this.encontro = false;
-							}else{
-								this.movieLists = movieLists;
-								this.encontro = true;
-							}});
+	if(this.userData.getId()>0){
+		if(this.userData.isAdmin()){
+		  //admin
+		  this.movieListService.getMovieLists()
+			.then(movieLists => {if(movieLists.length==0){
+									this.encontro=false;
+								}else{
+									this.movieLists = movieLists;
+									this.encontro=true;
+								}});
+		}else{
+			//User
+			this.movieListService.getMovieListsByUser(this.userData.getId())
+				.then(movieLists => {if(movieLists.length==0){
+										this.encontro = false;
+									}else{
+										this.movieLists = movieLists;
+										this.encontro = true;
+									}});
+		}
+	}else{
+		console.log('inicie sesion para ver');
+	}
+
 }
 
 //actores favoritos del usuario
@@ -63,15 +74,19 @@ verActoresFavoritos(): void {
 	this.movieLists = null;
 	this.peliculasActoresFavoritos = null;
 	
-	//Para user: asignar user logueado
-	let user = 1;
-	this.movieListService.getActoresFavoritos(user)
-		.then(actores => {if(actores.length==0){
-							this.encontro=false;
-						 }else{
-							this.actoresFavoritos = actores;
-							this.encontro=true;
-						 }});
+	if(this.userData.getId()>0){
+		//Para user: asignar user logueado
+		this.movieListService.getActoresFavoritos(this.userData.getId())
+			.then(actores => {if(actores.length==0){
+								this.encontro=false;
+							 }else{
+								this.actoresFavoritos = actores;
+								this.encontro=true;
+							 }});
+	}else{
+		console.log('inicie sesion para ver');
+	}
+
 }
 
 //peliculas con mas de un actor favorito
@@ -79,28 +94,27 @@ verPeliculasVariosActoresFavoritos(): void{
 	this.movieLists = null;
 	this.actoresFavoritos = null;
 	
-	let user = 1;
-
-	this.movieListService.getPeliculasVariosActoresFavoritos(user)
+	if(this.userData.getId()>0){
+		this.movieListService.getPeliculasVariosActoresFavoritos(this.userData.getId())
 		.then(peliculas => {if(peliculas.length == 0){
 								this.encontro=false;
 							}else{
 								this.peliculasActoresFavoritos = peliculas;
 								this.encontro=true;
 							}});
+	}else{
+		console.log('inicie sesion para ver');
+	}
+	
 }
 
 //interseccion de peliculas entre dos listas
 verInterseccion(): void {
-	console.log(this.idLista1);
-	console.log(this.idLista2);
-
 	if(this.idLista1==null || this.idLista2==null){
-		console.log('Seleccione una lista');
+		//no selecciono 2 listas
 	}else{
 		this.movieListService.getInterseccion(this.idLista1, this.idLista2);
-	}
-	
+	}	
 }
 
 setLista1(idMovie: number): void {
@@ -112,15 +126,22 @@ setLista2(idMovie: number): void {
 }
 
 ngOnInit(): void {
-  this.encontro=true;
-  this.idLista1=null;
-  this.idLista2=null;
-  let user = 1;
-	this.movieListService.getMovieListsByUser(user)
-		.then(movieLists => {this.dropDownMovieLists = movieLists;});
+	  this.encontro=true;
+	  this.nombreLista='';
+	  this.idLista1=null;
+	  this.idLista2=null;
+
+		if(this.userData.getId()>0){
+			console.log('user: ' + this.userData.getUsername() + 'id: ' + this.userData.getId());
+			this.movieListService.getMovieListsByUser(this.userData.getId())
+			.then(movieLists => {this.dropDownMovieLists = movieLists;});
+		}else{
+			console.log('inicie sesion para ver');
+		}
+		
 }
 
-constructor(private movieListService: MovieListService) {
+constructor(private movieListService: MovieListService, private userData: UserData) {
 	
 }
 
