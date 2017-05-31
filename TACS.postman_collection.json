@@ -2,7 +2,7 @@
 	"variables": [],
 	"info": {
 		"name": "TACS",
-		"_postman_id": "58c335c4-3102-060f-b97f-8b33906282ce",
+		"_postman_id": "85d9f764-5101-c088-0a83-4c2560474509",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -17,7 +17,10 @@
 						"url": "http://localhost:8080/actores",
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": "Lista de actores"
 					},
 					"response": []
@@ -28,7 +31,10 @@
 						"url": "http://localhost:8080/actores/10990",
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": "Me devuelve un actor segun el ID especificado"
 					},
 					"response": []
@@ -38,7 +44,13 @@
 					"request": {
 						"url": "http://localhost:8080/actores/rankingFavoritos",
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer  eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXJ0aW4iLCJhdWRpZW5jZSI6IndlYiIsImNyZWF0ZWQiOjE0OTYxNjg2MTQ4MzgsImV4cCI6MTQ5Njc3MzQxNH0.aZ1Ug3nA200pMOHFhXtx26wqjRN_R1E6BujvYTkN2nie3FB2hFMekDHayfMu_3CSouLpk-NaG0SDrBXc9SLuSw",
+								"description": ""
+							}
+						],
 						"body": {},
 						"description": ""
 					},
@@ -47,7 +59,7 @@
 				{
 					"name": "Actores segun un query string",
 					"request": {
-						"url": "http://localhost:8080/actores?query=Keanu",
+						"url": "http://localhost:8080/actores?query=ben",
 						"method": "GET",
 						"header": [],
 						"body": {},
@@ -64,9 +76,15 @@
 				{
 					"name": "Lista de peliculas by ID",
 					"request": {
-						"url": "http://localhost:8080/movielist/0",
+						"url": "http://localhost:8080/movielists/592dba4a61efb822fce110ed",
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXJ0aW4iLCJhdWRpZW5jZSI6IndlYiIsImNyZWF0ZWQiOjE0OTYxNjg2MTQ4MzgsImV4cCI6MTQ5Njc3MzQxNH0.aZ1Ug3nA200pMOHFhXtx26wqjRN_R1E6BujvYTkN2nie3FB2hFMekDHayfMu_3CSouLpk-NaG0SDrBXc9SLuSw",
+								"description": ""
+							}
+						],
 						"body": {},
 						"description": ""
 					},
@@ -75,18 +93,23 @@
 				{
 					"name": "Crear lista de peliculas",
 					"request": {
-						"url": "http://localhost:8080/movielist",
+						"url": "http://localhost:8080/movielists?user=2",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
 								"value": "application/json",
 								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXJ0aW4iLCJhdWRpZW5jZSI6IndlYiIsImNyZWF0ZWQiOjE0OTYxNjg2MTQ4MzgsImV4cCI6MTQ5Njc3MzQxNH0.aZ1Ug3nA200pMOHFhXtx26wqjRN_R1E6BujvYTkN2nie3FB2hFMekDHayfMu_3CSouLpk-NaG0SDrBXc9SLuSw",
+								"description": ""
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"nombre\":\"altasPelis\",\n  \"ownerId\":\n}"
+							"raw": "pelis copadas"
 						},
 						"description": ""
 					},
@@ -95,18 +118,23 @@
 				{
 					"name": "Agregar pelicula a lista",
 					"request": {
-						"url": "http://localhost:8080/movielist/0",
+						"url": "http://localhost:8080/movielists/592dbb7761efb83b68e6fdb9/126889",
 						"method": "PUT",
 						"header": [
 							{
 								"key": "Content-Type",
 								"value": "application/json",
 								"description": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXJ0aW4iLCJhdWRpZW5jZSI6IndlYiIsImNyZWF0ZWQiOjE0OTYxNjg2MTQ4MzgsImV4cCI6MTQ5Njc3MzQxNH0.aZ1Ug3nA200pMOHFhXtx26wqjRN_R1E6BujvYTkN2nie3FB2hFMekDHayfMu_3CSouLpk-NaG0SDrBXc9SLuSw",
+								"description": ""
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "0"
+							"raw": ""
 						},
 						"description": ""
 					},
@@ -118,12 +146,14 @@
 						"url": "http://localhost:8080/movielist/0/0",
 						"method": "DELETE",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": ""
 					},
 					"response": []
 				},
-				
 				{
 					"name": "Borrar peliculas de lista",
 					"request": {
@@ -141,9 +171,15 @@
 				{
 					"name": "Comparacion entre 2 listas de peliculass",
 					"request": {
-						"url": "http://localhost:8080/movielist/compare?list1=0&list2=1",
+						"url": "http://localhost:8080/movielists/compare?list1=592dba4a61efb822fce110ed&list2=592dbb7761efb83b68e6fdb9",
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXJ0aW4iLCJhdWRpZW5jZSI6IndlYiIsImNyZWF0ZWQiOjE0OTYxNjg2MTQ4MzgsImV4cCI6MTQ5Njc3MzQxNH0.aZ1Ug3nA200pMOHFhXtx26wqjRN_R1E6BujvYTkN2nie3FB2hFMekDHayfMu_3CSouLpk-NaG0SDrBXc9SLuSw",
+								"description": ""
+							}
+						],
 						"body": {},
 						"description": ""
 					},
@@ -153,6 +189,31 @@
 					"name": "Ranking actores repetidos en una lista",
 					"request": {
 						"url": "http://localhost:8080/movielist/0/actoresRepetidos",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Mostrar todas las movielists",
+					"request": {
+						"url": "http://localhost:8080/movielists",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "MovieLists de un usuario",
+					"request": {
+						"url": "http://localhost:8080/movielists/search?ownerId=2",
 						"method": "GET",
 						"header": [],
 						"body": {},
@@ -172,7 +233,10 @@
 						"url": "http://localhost:8080/login?name=guillermo&pass=123456",
 						"method": "POST",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": ""
 					},
 					"response": []
@@ -183,7 +247,10 @@
 						"url": "http://localhost:8080/logout",
 						"method": "PUT",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": ""
 					},
 					"response": []
@@ -200,7 +267,10 @@
 						"url": "http://localhost:8080/peliculas/11",
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": "Devuelve la pelicula segun el ID especificado"
 					},
 					"response": []
@@ -211,7 +281,10 @@
 						"url": "http://localhost:8080/peliculas",
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": "Devuelve la coleccion de peliculas"
 					},
 					"response": []
@@ -219,9 +292,15 @@
 				{
 					"name": "Peliculas que incluyen actores favoritos de usuario",
 					"request": {
-						"url": "http://localhost:8080/peliculas/actoresFavoritos/0",
+						"url": "http://localhost:8080/peliculas/actoresFavoritos/4",
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic TWFydGluOjEyMzQ=",
+								"description": ""
+							}
+						],
 						"body": {},
 						"description": ""
 					},
@@ -233,7 +312,10 @@
 						"url": "http://localhost:8080/peliculas/tmdb",
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": ""
 					},
 					"response": []
@@ -244,7 +326,10 @@
 						"url": "http://localhost:8080/peliculas?query=star+wars",
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": ""
 					},
 					"response": []
@@ -258,7 +343,7 @@
 				{
 					"name": "Usuario by ID",
 					"request": {
-						"url": "http://localhost:8080/usuarios/0",
+						"url": "http://localhost:8080/usuarios/2",
 						"method": "GET",
 						"header": [],
 						"body": {},
@@ -272,7 +357,10 @@
 						"url": "http://localhost:8080/usuarios",
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": ""
 					},
 					"response": []
@@ -300,7 +388,7 @@
 				{
 					"name": "Actores favoritos de un Usuario",
 					"request": {
-						"url": "http://localhost:8080/usuarios/1/actoresFavoritos",
+						"url": "http://localhost:8080/usuarios/2/actoresFavoritos",
 						"method": "GET",
 						"header": [],
 						"body": {},
@@ -311,7 +399,7 @@
 				{
 					"name": "Favoritear Actor",
 					"request": {
-						"url": "http://localhost:8080/usuarios/4/favorito/10990",
+						"url": "http://localhost:8080/usuarios/2/favorito/1245",
 						"method": "PUT",
 						"header": [],
 						"body": {},
@@ -322,7 +410,7 @@
 				{
 					"name": "Desfavoritear Actor copy",
 					"request": {
-						"url": "http://localhost:8080/usuarios/1/favorito/1245",
+						"url": "http://localhost:8080/usuarios/4/favorito/18918",
 						"method": "DELETE",
 						"header": [],
 						"body": {},
