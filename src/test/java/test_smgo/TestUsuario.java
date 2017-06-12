@@ -1,3 +1,5 @@
+package test_smgo;
+
 import org.junit.Test;
 import util.PassEncoder;
 
