@@ -49,4 +49,32 @@ public class TestActor1 {
     	System.out.println(content);
     }
 
+    //Test wihtout mock
+    @Test
+    public void getNombre() throws Exception {
+        String nameExpectedValue="EsteEsElNombre";
+
+        Actor actor=new Actor();
+        actor.setNombre(nameExpectedValue);
+        String nameActualValue=actor.getNombre();
+
+        assertEquals(nameExpectedValue, nameActualValue);
+    }
+
+    @Test
+    public void getListaPeliculas() throws Exception {
+        MovieCastResult movie1 = new MovieCastResult();
+        MovieCastResult movie2 = new MovieCastResult();
+        MovieCastResult movie3 = new MovieCastResult();
+        List<MovieCastResult> listExpectedValue = new ArrayList<MovieCastResult>();
+        listExpectedValue.add(movie1);
+        listExpectedValue.add(movie2);
+        listExpectedValue.add(movie3);
+
+        Actor actor=new Actor();
+        actor.setListaPeliculas(listExpectedValue);
+        listExpectedValue.add(new MovieCastResult());
+        assertEquals(actor.getListaPeliculas(), listExpectedValue);
+    }
+
 }
