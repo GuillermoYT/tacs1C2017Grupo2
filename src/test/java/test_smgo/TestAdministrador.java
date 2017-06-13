@@ -1,6 +1,9 @@
 package test_smgo;
 
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
@@ -12,7 +15,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 
 import creacionales.UsuarioBuilder;
 import model.Rol;
@@ -41,11 +43,14 @@ public class TestAdministrador {
     @Test
     public void testGetDetalleUsuario() throws Exception{
     	
-    	MvcResult result = this.mockMvc.perform(get("/usuarios/{id}",1).accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
+    	this.mockMvc.perform(get("/usuarios/{id}",1).accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
                 .andExpect(status().isOk())
-                .andReturn();
-    	String content = result.getResponse().getContentAsString();
-    	System.out.println(content);
+            	.andExpect(jsonPath("$.id").exists())
+                .andExpect(jsonPath("$.username").value("Guille"))
+                .andExpect(jsonPath("$.listaMovieList", hasSize(0)))
+                .andExpect(jsonPath("$.actoresFavoritos", hasSize(0)))
+                .andExpect(jsonPath("$.ultimaSesion").isEmpty())
+                .andDo(print());
     	
     }
 }
