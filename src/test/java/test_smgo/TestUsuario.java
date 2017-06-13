@@ -1,11 +1,14 @@
 package test_smgo;
 
+import org.junit.Before;
 import org.junit.Test;
 
+import hierarchyOfExceptions.UserNotFoundException;
 import model.Rol;
 import model.SummaryActor;
 import model.Usuario;
-import util.PassEncoder;
+import repos.RepoUsuarios;
+import tacs.ActorController;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,7 +16,14 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class TestUsuario {
+public class TestUsuario extends AbstractTest{
+
+	private ActorController controladorActores ;
+	
+	@Before
+	public void setup(){
+		controladorActores = new ActorController();
+	}
     @Test
     public void getUsername() throws Exception {
         String asignedName = "anyUsername";
@@ -94,5 +104,36 @@ public class TestUsuario {
         usuario.setRol(unRol);
         assertEquals(unRol, usuario.getRol());
     }
+    
+    //Como usuario quiero marcar un actor como favorito
+    @Test
+    public void testMarcarFavorito() throws UserNotFoundException{
+    	Usuario user = RepoUsuarios.getInstance().buscarUsuario("guille");
+		user.addIdActorFavorito(controladorActores.getSumActorById(10));
+		assertTrue(user.getIdsActoresFavoritos().stream().anyMatch(ac -> ac.getId() == 10));   	
+    }
+
+    //Como usuario quiero desmarcar un actor como favorito
+    @Test
+    public void testDesmarcarFavorito() throws UserNotFoundException{
+    	Usuario user = RepoUsuarios.getInstance().buscarUsuario("guille");
+		user.removeIdActorFavorito(controladorActores.getSumActorById(10));
+		assertTrue(!user.getIdsActoresFavoritos().stream().anyMatch(ac -> ac.getId() == 10));   	
+    }
+
+    //Como usuario quiero ver quienes son mis actores favoritos
+    @Test
+    public void testGetActoresFavoritos() throws UserNotFoundException{
+    	Usuario user = RepoUsuarios.getInstance().buscarUsuario("guille");
+		user.addIdActorFavorito(controladorActores.getSumActorById(10));
+		user.addIdActorFavorito(controladorActores.getSumActorById(12));
+		
+		List<SummaryActor> listAux = new ArrayList();
+		listAux.add(controladorActores.getSumActorById(10));
+		listAux.add(controladorActores.getSumActorById(12));
+
+		assertTrue(user.getIdsActoresFavoritos().containsAll(listAux));   	
+    }
+
 
 }

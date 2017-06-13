@@ -52,6 +52,16 @@ public class TestActor1 {
     	System.out.println(content);
     }
 
+    //Como usuario quiero poder ver el detalle de un actor
+    @Test
+    public void testGetDetalleActor() throws Exception {
+    	MvcResult result = this.mockMvc.perform(get("/actores/{actor}",10).accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
+                .andExpect(status().isOk())
+                .andReturn();
+    	String content = result.getResponse().getContentAsString();
+    	System.out.println(content);
+    }
+    
     //Test wihtout mock
     @Test
     public void getNombre() throws Exception {
