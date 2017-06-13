@@ -17,10 +17,13 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
 import creacionales.UsuarioBuilder;
+import model.MovieList;
 import model.Rol;
 import model.Usuario;
+import repos.RepoMoviesLists;
 import repos.RepoUsuarios;
 import tacs.Application;
+import tacs.MovieController;
 import tacs.UserController;
 
 @RunWith(SpringRunner.class)
@@ -37,6 +40,18 @@ public class TestAdministrador {
 	
 		Usuario guille = new UsuarioBuilder("Guille").pass("1234").rol(usr).build();
 		RepoUsuarios.getInstance().addUsuario(guille);
+		
+		MovieList rankingMovies = new MovieList("Lista A", guille.getId());
+		MovieController mc = new MovieController();
+	
+	
+		rankingMovies.addPelicula(mc.getPeliculaById((long)120));
+		rankingMovies.addPelicula(mc.getPeliculaById((long)121));
+		rankingMovies.addPelicula(mc.getPeliculaById((long)122));
+//		MovieListController mcl = new MovieListController();
+	
+		RepoMoviesLists.getInstance().addMovieList(rankingMovies);
+
     }
 
     //Como administrador quiero poder ver los siguientes datos de un usuario
@@ -47,9 +62,11 @@ public class TestAdministrador {
                 .andExpect(status().isOk())
             	.andExpect(jsonPath("$.id").exists())
                 .andExpect(jsonPath("$.username").value("Guille"))
-                .andExpect(jsonPath("$.listaMovieList", hasSize(0)))
+                .andExpect(jsonPath("$.listaMovieList", hasSize(1)))
                 .andExpect(jsonPath("$.actoresFavoritos", hasSize(0)))
                 .andExpect(jsonPath("$.ultimaSesion").isEmpty())
+                .andExpect(jsonPath("$.listaMovieList[0].nombre").value("Lista A"))
+                .andExpect(jsonPath("$.listaMovieList[0].listaPeliculas", hasSize(3)))
                 .andDo(print());
     	
     }
