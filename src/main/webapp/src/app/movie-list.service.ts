@@ -35,7 +35,7 @@ export class MovieListService {
 	      .catch(this.handleError);
   }
 
-  deleteMovieFromList(movielistId: number, movieId: number): Promise<number>{
+  deleteMovieFromList(movielistId: string, movieId: number): Promise<number>{
 	  let headers = new Headers({ 'Content-Type': 'application/json' });
 	  let url = this.baseUrl+`/movielists/${movielistId}`;
 	  let body= JSON.stringify({

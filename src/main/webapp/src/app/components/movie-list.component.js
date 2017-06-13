@@ -16,7 +16,7 @@ var MovieListComponent = (function () {
         this.movieListService = movieListService;
         this.userData = userData;
     }
-    //crear lista de peliculas 
+    //crear lista de peliculas
     MovieListComponent.prototype.crearClick = function () {
         var _this = this;
         if (this.userData.getId() > 0) {

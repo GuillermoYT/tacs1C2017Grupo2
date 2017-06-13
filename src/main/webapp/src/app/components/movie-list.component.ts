@@ -12,15 +12,15 @@ import { UserData } from './../model/user-data';
 })
 export class MovieListComponent implements OnInit {
 	nombreLista: string;
-	idLista1: number;
-	idLista2: number;
+	idLista1: string;
+	idLista2: string;
 	movieLists: MovieList[];
 	dropDownMovieLists: MovieList[];
 	actoresFavoritos: ActorFavorito[];
 	peliculasActoresFavoritos: Pelicula[];
 	encontro: boolean;
 
-//crear lista de peliculas 
+//crear lista de peliculas
 crearClick(): void {
 	if(this.userData.getId()>0){
 		if(this.nombreLista!=''){
@@ -42,7 +42,7 @@ textReset(): void {
 verListas(): void {
 	this.actoresFavoritos = null;
 	this.peliculasActoresFavoritos = null;
-	
+
 	if(this.userData.getId()>0){
 		if(this.userData.isAdmin()){
 		  //admin
@@ -73,7 +73,7 @@ verListas(): void {
 verActoresFavoritos(): void {
 	this.movieLists = null;
 	this.peliculasActoresFavoritos = null;
-	
+
 	if(this.userData.getId()>0){
 		//Para user: asignar user logueado
 		this.movieListService.getActoresFavoritos(this.userData.getId())
@@ -93,7 +93,7 @@ verActoresFavoritos(): void {
 verPeliculasVariosActoresFavoritos(): void{
 	this.movieLists = null;
 	this.actoresFavoritos = null;
-	
+
 	if(this.userData.getId()>0){
 		this.movieListService.getPeliculasVariosActoresFavoritos(this.userData.getId())
 		.then(peliculas => {if(peliculas.length == 0){
@@ -105,7 +105,7 @@ verPeliculasVariosActoresFavoritos(): void{
 	}else{
 		console.log('inicie sesion para ver');
 	}
-	
+
 }
 
 //interseccion de peliculas entre dos listas
@@ -114,14 +114,14 @@ verInterseccion(): void {
 		//no selecciono 2 listas
 	}else{
 		this.movieListService.getInterseccion(this.idLista1, this.idLista2);
-	}	
+	}
 }
 
-setLista1(idMovie: number): void {
+setLista1(idMovie: string): void {
 	this.idLista1=idMovie;
 }
 
-setLista2(idMovie: number): void {
+setLista2(idMovie: string): void {
 	this.idLista2=idMovie;
 }
 
@@ -138,11 +138,11 @@ ngOnInit(): void {
 		}else{
 			console.log('inicie sesion para ver');
 		}
-		
+
 }
 
 constructor(private movieListService: MovieListService, private userData: UserData) {
-	
+
 }
 
 }

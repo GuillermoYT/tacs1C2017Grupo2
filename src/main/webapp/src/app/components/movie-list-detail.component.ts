@@ -19,7 +19,7 @@ import { RankingActor } from './../model/RankingActor';
         <span>Propietario: {{movieList.ownerId}}</span>
       </div>
 
-      <button (click)="verRankingMovieList(movieList.id)" class="btn waves-effect black-text">Ver Ranking Actores</button>  
+      <button (click)="verRankingMovieList(movieList.id)" class="btn waves-effect black-text">Ver Ranking Actores</button>
       <li *ngFor="let arank of ranking">
         <div class="row">
           <div class="card horizontal teal lighten-2">
@@ -30,7 +30,7 @@ import { RankingActor } from './../model/RankingActor';
             </div>
           </div>
         </div>
-      </li>			
+      </li>
       <div class="card-panel teal lighten-2 black-text">
         <h3>Peliculas:</h3>
         <div class="container">
@@ -62,19 +62,19 @@ export class MovieListDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params
-      .switchMap((params: Params) => this.movieListService.getMovieList(+params['id']))
+      .switchMap((params: Params) => this.movieListService.getMovieList(params['id']))
       .subscribe(movielist => {this.movieList = movielist;});
   }
 
-  deleteMovieFromList(movielistId:number, movieId: number){
+  deleteMovieFromList(movielistId: string, movieId: number){
 	  this.movieListService.deleteMovieFromList(movielistId, movieId).then(res => {this.ngOnInit()});
   }
-  
- 	verRankingMovieList(idML: number){
+
+ 	verRankingMovieList(idML: string){
 		this.movieListService.getRankingMovieList(idML).then(resp => {this.ranking = resp;
  		});
  	}
-  
-  
+
+
   constructor(private movieListService: MovieListService, private route: ActivatedRoute, private location: Location) {}
 }
