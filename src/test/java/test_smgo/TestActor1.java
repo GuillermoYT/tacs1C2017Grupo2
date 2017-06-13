@@ -43,13 +43,16 @@ public class TestActor1 {
         this.mockMvc = standaloneSetup(new ActorController()).build();
     }
 
+    //Como usuario quiero poder buscar actor por nombre
     @Test
-    public void testGetActores() throws Exception {
-    	MvcResult result = this.mockMvc.perform(get("/actores").accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
+    public void testBuscarActores() throws Exception {
+    	this.mockMvc.perform(get("/actores")
+    			.param("query", "Tom Hanks")
+    			.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
                 .andExpect(status().isOk())
-                .andReturn();
-    	String content = result.getResponse().getContentAsString();
-    	System.out.println(content);
+                .andExpect(jsonPath("$.[0].nombre").value("Tom Hanks"))
+                .andExpect(jsonPath("$.[0].imagePath").value("http://image.tmdb.org/t/p/w300//a14CNByTYALAPSGlwlmfHILpEIW.jpg"))
+                .andDo(print());
     }
 
     //Como usuario quiero poder ver el detalle de un actor
