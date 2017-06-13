@@ -1,6 +1,10 @@
 package test_smgo;
 
 import org.junit.Test;
+
+import model.Rol;
+import model.SummaryActor;
+import model.Usuario;
 import util.PassEncoder;
 
 import java.util.ArrayList;
@@ -9,7 +13,7 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class UsuarioTest {
+public class TestUsuario {
     @Test
     public void getUsername() throws Exception {
         String asignedName = "anyUsername";
