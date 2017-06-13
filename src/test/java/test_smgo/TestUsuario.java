@@ -119,4 +119,18 @@ public class TestUsuario extends AbstractTest{
 		assertTrue(!user.getIdsActoresFavoritos().stream().anyMatch(ac -> ac.getId() == 10));   	
     }
 
+    @Test
+    public void testGetActoresFavoritos() throws UserNotFoundException{
+    	Usuario user = RepoUsuarios.getInstance().buscarUsuario("guille");
+		user.addIdActorFavorito(controladorActores.getSumActorById(10));
+		user.addIdActorFavorito(controladorActores.getSumActorById(12));
+		
+		List<SummaryActor> listAux = new ArrayList();
+		listAux.add(controladorActores.getSumActorById(10));
+		listAux.add(controladorActores.getSumActorById(12));
+
+		assertTrue(user.getIdsActoresFavoritos().containsAll(listAux));   	
+    }
+
+
 }
