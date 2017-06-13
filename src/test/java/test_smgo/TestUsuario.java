@@ -104,7 +104,8 @@ public class TestUsuario extends AbstractTest{
         usuario.setRol(unRol);
         assertEquals(unRol, usuario.getRol());
     }
-
+    
+    //Como usuario quiero marcar un actor como favorito
     @Test
     public void testMarcarFavorito() throws UserNotFoundException{
     	Usuario user = RepoUsuarios.getInstance().buscarUsuario("guille");
@@ -112,6 +113,7 @@ public class TestUsuario extends AbstractTest{
 		assertTrue(user.getIdsActoresFavoritos().stream().anyMatch(ac -> ac.getId() == 10));   	
     }
 
+    //Como usuario quiero desmarcar un actor como favorito
     @Test
     public void testDesmarcarFavorito() throws UserNotFoundException{
     	Usuario user = RepoUsuarios.getInstance().buscarUsuario("guille");
@@ -119,6 +121,7 @@ public class TestUsuario extends AbstractTest{
 		assertTrue(!user.getIdsActoresFavoritos().stream().anyMatch(ac -> ac.getId() == 10));   	
     }
 
+    //Como usuario quiero ver quienes son mis actores favoritos
     @Test
     public void testGetActoresFavoritos() throws UserNotFoundException{
     	Usuario user = RepoUsuarios.getInstance().buscarUsuario("guille");
