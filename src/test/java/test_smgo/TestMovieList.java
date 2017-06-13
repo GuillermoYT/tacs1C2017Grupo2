@@ -13,6 +13,8 @@ import util.LongsWrapper;
 
 import org.junit.runners.MethodSorters;
 
+import model.MovieList;
+
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestMovieList {
@@ -60,7 +62,20 @@ public class TestMovieList {
 	}
 	
 	@Test
-	public void test03EliminarPeliculas() {
+	public void test03ConsultarLista() {
+		Long id=1l;
+		
+		//Verifico que me devuelva una lista
+		assertEquals(MovieList.class, controlMovieList.getMovieList(id).getClass());
+		
+		//Obtengo la lista con el id que pedi
+		assertEquals(id, controlMovieList.getMovieList(1).getId());
+
+	}
+
+	
+	@Test
+	public void test04EliminarPeliculas() {
 		
 		//Hay dos peliculas en la lista
 		assertEquals(2, controlMovieList.getMovieList(1).getListaPeliculas().size());
@@ -79,7 +94,7 @@ public class TestMovieList {
 	}
 	
 	@Test
-	public void test04CompararListas() {
+	public void test05CompararListas() {
 		
 		//Agrego una lista y peliculas para comparar luego
 		controlMovieList.createMovielist("otra", 1);
@@ -102,7 +117,7 @@ public class TestMovieList {
 	}
 	
 	@Test
-	public void test05RankingActoresEnUnaLista() {
+	public void test06RankingActoresEnUnaLista() {
 		MovieController controlMovie = new MovieController();
 		
 		//Creo una nueva movieList sin peliculas. list id:3
@@ -154,5 +169,6 @@ public class TestMovieList {
 		assertEquals(1, controlMovieList.getRankingFromActorsByMovies(3).get(cantActores+cantActores2-2).getCantRepeticiones());
 
 	}
+	
 
 }
