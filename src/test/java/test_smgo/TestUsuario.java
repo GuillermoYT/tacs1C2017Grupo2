@@ -1,11 +1,14 @@
 package test_smgo;
 
+import org.junit.Before;
 import org.junit.Test;
 
+import hierarchyOfExceptions.UserNotFoundException;
 import model.Rol;
 import model.SummaryActor;
 import model.Usuario;
-import util.PassEncoder;
+import repos.RepoUsuarios;
+import tacs.ActorController;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,7 +16,14 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class TestUsuario {
+public class TestUsuario extends AbstractTest{
+
+	private ActorController controladorActores ;
+	
+	@Before
+	public void setup(){
+		controladorActores = new ActorController();
+	}
     @Test
     public void getUsername() throws Exception {
         String asignedName = "anyUsername";
@@ -93,6 +103,20 @@ public class TestUsuario {
         Rol unRol = new Rol("admin");
         usuario.setRol(unRol);
         assertEquals(unRol, usuario.getRol());
+    }
+
+    @Test
+    public void testMarcarFavorito() throws UserNotFoundException{
+    	Usuario user = RepoUsuarios.getInstance().buscarUsuario("guille");
+		user.addIdActorFavorito(controladorActores.getSumActorById(10));
+		assertTrue(user.getIdsActoresFavoritos().stream().anyMatch(ac -> ac.getId() == 10));   	
+    }
+
+    @Test
+    public void testDesmarcarFavorito() throws UserNotFoundException{
+    	Usuario user = RepoUsuarios.getInstance().buscarUsuario("guille");
+		user.removeIdActorFavorito(controladorActores.getSumActorById(10));
+		assertTrue(!user.getIdsActoresFavoritos().stream().anyMatch(ac -> ac.getId() == 10));   	
     }
 
 }
