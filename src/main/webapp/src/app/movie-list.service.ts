@@ -47,7 +47,7 @@ export class MovieListService {
   }
 
   //devuelve una movielist por id
-  getMovieList(id: number): Promise<MovieList> {
+  getMovieList(id: string): Promise<MovieList> {
     let url = this.baseUrl+`/movielists/${id}`;
     return this.http.get(url)
       .toPromise()
@@ -91,7 +91,7 @@ export class MovieListService {
   }
 
   //devuelve la interseccion de peliculas entre dos listas
-  getInterseccion(list1: number, list2: number) {
+  getInterseccion(list1: string, list2: string) {
 	  let promise = new Promise((resolve, reject) => {
 		    let url = this.baseUrl+`/movielists/compare?list1=${list1}&list2=${list2}`;
 		    this.http.get(url)
@@ -109,7 +109,7 @@ export class MovieListService {
 	  return promise;
   }
 
-	getRankingMovieList(idML: number): Promise<RankingActor[]>{
+	getRankingMovieList(idML: string): Promise<RankingActor[]>{
 		let url = this.baseUrl+`/movielists/actoresRepetidos/${idML}`;
 		return this.http.get(url).toPromise().then( res => res.json() as RankingActor[])
 						.catch(this.handleError);
