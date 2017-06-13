@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
+import model.SummaryActor;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,6 +23,7 @@ import model.Rol;
 import model.Usuario;
 import repos.RepoMoviesLists;
 import repos.RepoUsuarios;
+import tacs.ActorController;
 import tacs.Application;
 import tacs.MovieController;
 import tacs.UserController;
@@ -32,10 +34,12 @@ import tacs.UserController;
 public class TestAdministrador {
 
 	private MockMvc mockMvc;
+	private MockMvc mockMvc2;
 
     @Before
     public void setup() {
         this.mockMvc = standaloneSetup(new UserController()).build();
+		this.mockMvc2 = standaloneSetup(new ActorController()).build();
 		Rol usr = new Rol("Usuario");
 	
 		Usuario guille = new UsuarioBuilder("Guille").pass("1234").rol(usr).build();
@@ -51,6 +55,38 @@ public class TestAdministrador {
 //		MovieListController mcl = new MovieListController();
 	
 		RepoMoviesLists.getInstance().addMovieList(rankingMovies);
+
+
+
+
+		//Creo un Admin
+		Rol adm = new Rol("Administrador");
+		Usuario admin = new UsuarioBuilder("jon").pass("1234").rol(adm).build();
+		RepoUsuarios.getInstance().addUsuario(admin);
+		//Creo 3 usuarios
+
+
+		Usuario usr1 = new UsuarioBuilder("usr1").pass("1234").rol(adm).build();
+		RepoUsuarios.getInstance().addUsuario(usr1);
+
+		Usuario usr2 = new UsuarioBuilder("usr2").pass("1234").rol(adm).build();
+		RepoUsuarios.getInstance().addUsuario(usr2);
+
+		Usuario usr3 = new UsuarioBuilder("usr3").pass("1234").rol(adm).build();
+		RepoUsuarios.getInstance().addUsuario(usr3);
+		//Creo un set de actores
+		SummaryActor sa1 = new SummaryActor();
+		SummaryActor sa2 = new SummaryActor();
+		SummaryActor sa3 = new SummaryActor();
+		SummaryActor sa4 = new SummaryActor();
+
+		//a cada usuario le asigno actores favoritos
+		usr1.addIdActorFavorito(sa1);
+		usr1.addIdActorFavorito(sa2);
+		usr1.addIdActorFavorito(sa3);
+		usr2.addIdActorFavorito(sa3);
+		usr2.addIdActorFavorito(sa4);
+		usr3.addIdActorFavorito(sa3);
 
     }
 
@@ -70,4 +106,16 @@ public class TestAdministrador {
                 .andDo(print());
     	
     }
+
+	//Como administrador quiero ver el ranking de actores favoritos de todos mis usuarios
+	//(los actores que han sido más veces elegidos como favoritos)
+	@Test
+	public void testRankingActoresFavoritos() throws Exception{
+
+		//utilizo el endpoint que me permite conocer los actores favoritos y
+			//corroboro que conincide con los puestos a mano
+		this.mockMvc2.perform(get("actores/rankingFavoritos").accept(MediaType.parseMediaType("application/json")))
+				.andExpect(status().isOk())
+				.andDo(print());
+	}
 }
