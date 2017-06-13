@@ -1,18 +1,18 @@
 package test_smgo;
 
-import java.util.List;
+
 
 import org.junit.Before;
 
 import creacionales.UsuarioBuilder;
 import model.MovieList;
-import model.RankingActor;
 import model.Rol;
 import model.Usuario;
 import repos.RepoMoviesLists;
 import repos.RepoUsuarios;
 import tacs.MovieController;
 import tacs.MovieListController;
+
 
 public class AbstractTest {
 	private Usuario guille;
@@ -33,7 +33,7 @@ public class AbstractTest {
 		rankingMovies.addPelicula(mc.getPeliculaById((long)120));
 		rankingMovies.addPelicula(mc.getPeliculaById((long)121));
 		rankingMovies.addPelicula(mc.getPeliculaById((long)122));
-		MovieListController mcl = new MovieListController();
+//		MovieListController mcl = new MovieListController();
 	
 		RepoMoviesLists.getInstance().addMovieList(rankingMovies);
 		RepoUsuarios.getInstance().addUsuario(guille);
