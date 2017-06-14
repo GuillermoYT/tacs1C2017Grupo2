@@ -10,13 +10,15 @@ import { MovieList } from './../model/movie-list';
 import { MovieListService } from './../movie-list.service';
 import { RankingActor } from './../model/RankingActor';
 
+import { UserData } from './../model/user-data';
+
 @Component({
   selector:'movie-list-detail',
   template:`
     <div *ngIf="movieList" class="center-align">
       <div class="card-panel teal lighten-2 black-text">
         <h2>{{movieList.nombre}} </h2>
-        <span>Propietario: {{movieList.ownerId}}</span>
+        <span *ngIf="isAdmin">Propietario: {{movieList.ownerId}}</span>
       </div>
 
       <button (click)="verRankingMovieList(movieList.id)" class="btn waves-effect black-text">Ver Ranking Actores</button>
@@ -59,11 +61,19 @@ import { RankingActor } from './../model/RankingActor';
 export class MovieListDetailComponent implements OnInit {
   movieList: MovieList;
   ranking: RankingActor[];
+  isAdmin: boolean;
 
   ngOnInit(): void {
     this.route.params
       .switchMap((params: Params) => this.movieListService.getMovieList(params['id']))
       .subscribe(movielist => {this.movieList = movielist;});
+    if(this.userData.isAdmin()){
+    	//admin
+    	this.isAdmin = true;
+	}else{
+		//user
+		this.isAdmin = false;
+	}
   }
 
   deleteMovieFromList(movielistId: string, movieId: number){
@@ -76,5 +86,5 @@ export class MovieListDetailComponent implements OnInit {
  	}
 
 
-  constructor(private movieListService: MovieListService, private route: ActivatedRoute, private location: Location) {}
+  constructor(private movieListService: MovieListService, private route: ActivatedRoute, private location: Location, private userData: UserData) {}
 }

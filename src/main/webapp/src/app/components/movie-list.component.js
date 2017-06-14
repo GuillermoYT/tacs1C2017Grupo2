@@ -135,12 +135,11 @@ var MovieListComponent = (function () {
         this.idLista1 = null;
         this.idLista2 = null;
         if (this.userData.getId() > 0) {
-            console.log('user: ' + this.userData.getUsername() + 'id: ' + this.userData.getId());
+            //console.log('user: ' + this.userData.getUsername() + 'id: ' + this.userData.getId());
             this.movieListService.getMovieListsByUser(this.userData.getId())
                 .then(function (movieLists) { _this.dropDownMovieLists = movieLists; });
         }
         else {
-            console.log('inicie sesion para ver');
         }
     };
     return MovieListComponent;

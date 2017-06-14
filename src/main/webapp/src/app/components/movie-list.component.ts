@@ -132,11 +132,11 @@ ngOnInit(): void {
 	  this.idLista2=null;
 
 		if(this.userData.getId()>0){
-			console.log('user: ' + this.userData.getUsername() + 'id: ' + this.userData.getId());
+			//console.log('user: ' + this.userData.getUsername() + 'id: ' + this.userData.getId());
 			this.movieListService.getMovieListsByUser(this.userData.getId())
 			.then(movieLists => {this.dropDownMovieLists = movieLists;});
 		}else{
-			console.log('inicie sesion para ver');
+			//console.log('inicie sesion para ver');
 		}
 
 }
