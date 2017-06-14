@@ -1,18 +1,29 @@
 package util;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
+
+import apiResult.MovieCastResult;
+import static java.util.Comparator.comparingInt;
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toCollection;
+
+import java.util.ArrayList;
 
 public class General {
 
-	public static Set<Integer> findDuplicateIntegers(List<Integer> inList) {
-		List<Integer> copia = new ArrayList<Integer>(inList);
-		for(Integer valor : new HashSet<Integer>(inList)) {
-			copia.remove(valor);
-		}
-		return new HashSet<Integer>(copia);
+	public static List<MovieCastResult> findDuplicateIntegers(List<MovieCastResult> inList) {
+
+		  List<MovieCastResult> listWithDuplicates = inList.stream().filter(i ->  inList.stream().filter(x -> x.getId().equals((i.getId()))).count() >1)
+				.collect(Collectors.toList());
+		
+		@SuppressWarnings("unchecked")
+		List<MovieCastResult> unique = listWithDuplicates.stream()
+                .collect(collectingAndThen(toCollection(() -> new TreeSet<>(comparingInt(MovieCastResult::getId))),
+                                           ArrayList::new));
+	
+		return unique;
 	}
 	
 }

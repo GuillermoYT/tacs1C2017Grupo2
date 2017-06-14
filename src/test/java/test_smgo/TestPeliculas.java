@@ -12,6 +12,11 @@ import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import creacionales.UsuarioBuilder;
+import model.Rol;
+import model.Usuario;
+import repos.RepoUsuarios;
+import tacs.ActorController;
 import tacs.MovieController;
 public class TestPeliculas {
 
@@ -56,6 +61,25 @@ public class TestPeliculas {
 				.andExpect(jsonPath("$.[0].nombre").value("The Matrix"))
 				.andExpect(jsonPath("$.[1].nombre").value("The Matrix Reloaded"))
 				.andExpect(jsonPath("$.[2].nombre").value("The Matrix Revolutions"))
+				.andDo(print());
+	}
+
+	
+	@Test
+	public void testGetMovieByActorsFavorites() throws Exception {
+		Rol usr = new Rol("Usuario");
+		
+		Usuario guille = new UsuarioBuilder("Guille").pass("1234").rol(usr).build();
+		RepoUsuarios.getInstance().addUsuario(guille);
+
+		ActorController ac = new ActorController();
+		
+		RepoUsuarios.getInstance().getUserById(guille.getId()).addIdActorFavorito(ac.getSumActorById(1240693));
+		RepoUsuarios.getInstance().getUserById(guille.getId()).addIdActorFavorito(ac.getSumActorById(6384));
+		RepoUsuarios.getInstance().getUserById(guille.getId()).addIdActorFavorito(ac.getSumActorById(1331));
+		this.mockMvc.perform(get("/peliculas/actoresFavoritos/{usuario}", guille.getId()).accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
+				.andExpect(status().isOk())
+            	.andExpect(jsonPath("$",hasSize(5)))				
 				.andDo(print());
 	}
 }

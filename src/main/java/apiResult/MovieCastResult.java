@@ -1,12 +1,10 @@
 package apiResult;
 
-import model.Pelicula;
-import tacs.ConfigHolder;
 
 public class MovieCastResult {
 
 	private String character;
-	private int id;
+	private Integer id;
 	private String original_title;
 	
 	//GETTERS and SETTERS
@@ -17,7 +15,7 @@ public class MovieCastResult {
 		this.character = character;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 	public void setId(int id) {

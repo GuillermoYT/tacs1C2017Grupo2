@@ -1,13 +1,9 @@
 package tacs;
 
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,16 +12,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import apiResult.ActorCastResult;
-import apiResult.MovieActor;
 import apiResult.MovieCastResult;
-import apiResult.MovieCredits;
 import apiResult.MovieDetailResult;
 import apiResult.MovieListResult;
 import apiResult.MovieResult;
 import model.MovieDetail;
 import model.Pelicula;
-import model.Response;
-import repos.RepoMoviesLists;
 import repos.RepoUsuarios;
 import util.General;
 
@@ -61,35 +53,25 @@ public class MovieController extends AbstractController{
 	
 	// Lista de peliculas con varios actores favoritos de un usuario
 	@RequestMapping(value="/actoresFavoritos/{usuario}", method=RequestMethod.GET)
-	public List<Pelicula> getMovie(@PathVariable("usuario") Long usuario) {
-		List<Pelicula> peliculasFavoritos = new ArrayList<Pelicula>();
-		List<Integer> listaTentativa = new ArrayList<Integer>();
-		
+	public List<MovieCastResult> getMovie(@PathVariable("usuario") Long usuario) {
+		List<MovieCastResult> resultadoRequests = new ArrayList<MovieCastResult>();		
 		List<Integer> idsActoresFavoritosList = new ArrayList<Integer>();
+		
 		try {
 			RepoUsuarios.getInstance().getUserById(usuario).getIdsActoresFavoritos().forEach((af)->idsActoresFavoritosList.add(af.getId()));
 		} catch(Exception e) {
 			logger.error("Error pasando los ids de int a long!");
 		}
 		
-
-		ActorCastResult resultadoRequest;
-		for (Integer id : idsActoresFavoritosList) {
-			logger.info("Request: " + BASE_URL + "/person/" + id + "/movie_credits?" + API_KEY);
-			resultadoRequest = api.getForObject(BASE_URL + "/person/" + id + "/movie_credits?" + API_KEY, ActorCastResult.class);
-			for(MovieCastResult m : resultadoRequest.getCast()) {
-				listaTentativa.add(m.getId());
-			}
-		}
+		idsActoresFavoritosList.stream().map(id -> api.getForObject(BASE_URL + "/person/" + id + "/movie_credits?" + API_KEY, ActorCastResult.class))
+										.map(ac -> ac.getCast())
+										.forEach(cast -> {
+											resultadoRequests.addAll(cast);
+		});
 		
-		Set<Integer> peliculasDondeHayMasDeUno = General.findDuplicateIntegers(listaTentativa);
-
-		for(Integer p : peliculasDondeHayMasDeUno) {
-			logger.info("Se agrega pelicula: " + p + "/" + p.longValue());
-			peliculasFavoritos.add(getPeliculaById(p.longValue())); 
-		}
 		
-		return peliculasFavoritos;
+		List<MovieCastResult> result = General.findDuplicateIntegers(resultadoRequests);
+		return result;
 	}
 
 }
