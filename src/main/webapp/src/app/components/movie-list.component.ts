@@ -112,6 +112,7 @@ verPeliculasVariosActoresFavoritos(): void{
 verInterseccion(): void {
 	if(this.idLista1==null || this.idLista2==null){
 		//no selecciono 2 listas
+		  this.movieListService.results = [];
 	}else{
 		this.movieListService.getInterseccion(this.idLista1, this.idLista2);
 	}
@@ -130,6 +131,7 @@ ngOnInit(): void {
 	  this.nombreLista='';
 	  this.idLista1=null;
 	  this.idLista2=null;
+	  this.movieListService.results = [];
 
 		if(this.userData.getId()>0){
 			//console.log('user: ' + this.userData.getUsername() + 'id: ' + this.userData.getId());

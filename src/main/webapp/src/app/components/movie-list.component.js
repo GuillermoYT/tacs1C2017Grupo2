@@ -117,6 +117,8 @@ var MovieListComponent = (function () {
     //interseccion de peliculas entre dos listas
     MovieListComponent.prototype.verInterseccion = function () {
         if (this.idLista1 == null || this.idLista2 == null) {
+            //no selecciono 2 listas
+            this.movieListService.results = [];
         }
         else {
             this.movieListService.getInterseccion(this.idLista1, this.idLista2);
@@ -134,6 +136,7 @@ var MovieListComponent = (function () {
         this.nombreLista = '';
         this.idLista1 = null;
         this.idLista2 = null;
+        this.movieListService.results = [];
         if (this.userData.getId() > 0) {
             //console.log('user: ' + this.userData.getUsername() + 'id: ' + this.userData.getId());
             this.movieListService.getMovieListsByUser(this.userData.getId())
