@@ -39,7 +39,7 @@ public class TestAdministrador {
     @Before
     public void setup() {
         this.mockMvc = standaloneSetup(new UserController()).build();
-		this.mockMvc2 = standaloneSetup(new ActorController()).build();
+
 		Rol usr = new Rol("Usuario");
 	
 		Usuario guille = new UsuarioBuilder("Guille").pass("1234").rol(usr).build();
@@ -56,37 +56,30 @@ public class TestAdministrador {
 	
 		RepoMoviesLists.getInstance().addMovieList(rankingMovies);
 
+		//Setup como admin quiero ver el ranking de actores favoritos de todos los usuarios
 
-
-
-		//Creo un Admin
-		Rol adm = new Rol("Administrador");
-		Usuario admin = new UsuarioBuilder("jon").pass("1234").rol(adm).build();
-		RepoUsuarios.getInstance().addUsuario(admin);
 		//Creo 3 usuarios
 
+		Usuario usr1 = new UsuarioBuilder("usr1").pass("1234").rol(usr).build();RepoUsuarios.getInstance().addUsuario(usr1);
+		Usuario usr2 = new UsuarioBuilder("usr2").pass("1234").rol(usr).build();RepoUsuarios.getInstance().addUsuario(usr2);
+		Usuario usr3 = new UsuarioBuilder("usr3").pass("1234").rol(usr).build();RepoUsuarios.getInstance().addUsuario(usr3);
 
-		Usuario usr1 = new UsuarioBuilder("usr1").pass("1234").rol(adm).build();
-		RepoUsuarios.getInstance().addUsuario(usr1);
-
-		Usuario usr2 = new UsuarioBuilder("usr2").pass("1234").rol(adm).build();
-		RepoUsuarios.getInstance().addUsuario(usr2);
-
-		Usuario usr3 = new UsuarioBuilder("usr3").pass("1234").rol(adm).build();
-		RepoUsuarios.getInstance().addUsuario(usr3);
 		//Creo un set de actores
-		SummaryActor sa1 = new SummaryActor();
-		SummaryActor sa2 = new SummaryActor();
-		SummaryActor sa3 = new SummaryActor();
-		SummaryActor sa4 = new SummaryActor();
+		SummaryActor sa1 = new SummaryActor();sa1.setId(1);
+		SummaryActor sa2 = new SummaryActor();sa2.setId(2);
+		SummaryActor sa3 = new SummaryActor();sa3.setId(3);
+		SummaryActor sa4 = new SummaryActor();sa4.setId(4);
 
 		//a cada usuario le asigno actores favoritos
 		usr1.addIdActorFavorito(sa1);
 		usr1.addIdActorFavorito(sa2);
 		usr1.addIdActorFavorito(sa3);
+		usr1.addIdActorFavorito(sa4);
 		usr2.addIdActorFavorito(sa3);
 		usr2.addIdActorFavorito(sa4);
 		usr3.addIdActorFavorito(sa3);
+
+		//sa3,sa4,sa2,sa1
 
     }
 
@@ -114,8 +107,13 @@ public class TestAdministrador {
 
 		//utilizo el endpoint que me permite conocer los actores favoritos y
 			//corroboro que conincide con los puestos a mano
-		this.mockMvc2.perform(get("actores/rankingFavoritos").accept(MediaType.parseMediaType("application/json")))
+
+		this.mockMvc2 = standaloneSetup(new ActorController()).build();
+
+		this.mockMvc2.perform(get("/actores/rankingFavoritos").accept(MediaType.parseMediaType("application/json")))
 				.andExpect(status().isOk())
+				.andExpect(jsonPath("$[0].actor.id").value("3"))
+				.andExpect(jsonPath("$[1].actor.id").value("4"))
 				.andDo(print());
 	}
 }
