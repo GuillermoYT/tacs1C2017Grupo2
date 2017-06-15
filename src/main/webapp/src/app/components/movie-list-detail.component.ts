@@ -18,7 +18,7 @@ import { UserData } from './../model/user-data';
     <div *ngIf="movieList" class="center-align">
       <div class="card-panel teal lighten-2 black-text">
         <h2>{{movieList.nombre}} </h2>
-        <span *ngIf="isAdmin">Propietario: {{movieList.ownerId}}</span>
+        <span *ngIf="userData.admin">Propietario: {{movieList.ownerId}}</span>
       </div>
 
       <button (click)="verRankingMovieList(movieList.id)" class="btn waves-effect black-text">Ver Ranking Actores</button>
@@ -61,29 +61,21 @@ import { UserData } from './../model/user-data';
 export class MovieListDetailComponent implements OnInit {
   movieList: MovieList;
   ranking: RankingActor[];
-  isAdmin: boolean;
 
   ngOnInit(): void {
     this.route.params
       .switchMap((params: Params) => this.movieListService.getMovieList(params['id']))
       .subscribe(movielist => {this.movieList = movielist;});
-    if(this.userData.isAdmin()){
-    	//admin
-    	this.isAdmin = true;
-	}else{
-		//user
-		this.isAdmin = false;
-	}
   }
 
   deleteMovieFromList(movielistId: string, movieId: number){
 	  this.movieListService.deleteMovieFromList(movielistId, movieId).then(res => {this.ngOnInit()});
   }
 
- 	verRankingMovieList(idML: string){
+	verRankingMovieList(idML: string){
 		this.movieListService.getRankingMovieList(idML).then(resp => {this.ranking = resp;
- 		});
- 	}
+		});
+	}
 
 
   constructor(private movieListService: MovieListService, private route: ActivatedRoute, private location: Location, private userData: UserData) {}

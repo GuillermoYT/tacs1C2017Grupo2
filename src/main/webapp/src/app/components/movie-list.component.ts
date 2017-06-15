@@ -38,34 +38,32 @@ textReset(): void {
   this.nombreLista = "";
 }
 
-//movielists de un user o de todos si es admin
+//movielists de un user
 verListas(): void {
 	this.actoresFavoritos = null;
 	this.peliculasActoresFavoritos = null;
 
-	if(this.userData.getId()>0){
-		if(this.userData.isAdmin()){
-		  //admin
-		  this.movieListService.getMovieLists()
-			.then(movieLists => {if(movieLists.length==0){
-									this.encontro=false;
-								}else{
-									this.movieLists = movieLists;
-									this.encontro=true;
-								}});
-		}else{
-			//User
-			this.movieListService.getMovieListsByUser(this.userData.getId())
-				.then(movieLists => {if(movieLists.length==0){
-										this.encontro = false;
-									}else{
-										this.movieLists = movieLists;
-										this.encontro = true;
-									}});
-		}
-	}else{
-		console.log('inicie sesion para ver');
-	}
+	this.movieListService.getMovieListsByUser(this.userData.getId())
+		.then(movieLists => {if(movieLists.length==0){
+								this.encontro = false;
+							}else{
+								this.movieLists = movieLists;
+								this.encontro = true;
+							}});
+}
+
+//movielists de todos (admin mode)
+verTodasListas(): void {
+	this.actoresFavoritos = null;
+	this.peliculasActoresFavoritos = null;
+
+	  this.movieListService.getMovieLists()
+		.then(movieLists => {if(movieLists.length==0){
+								this.encontro=false;
+							}else{
+								this.movieLists = movieLists;
+								this.encontro=true;
+							}});
 
 }
 
@@ -133,12 +131,13 @@ ngOnInit(): void {
 	  this.idLista2=null;
 	  this.movieListService.results = [];
 
-		if(this.userData.getId()>0){
+		if(this.userData.admin){
 			//console.log('user: ' + this.userData.getUsername() + 'id: ' + this.userData.getId());
-			this.movieListService.getMovieListsByUser(this.userData.getId())
+			this.movieListService.getMovieLists()
 			.then(movieLists => {this.dropDownMovieLists = movieLists;});
 		}else{
-			//console.log('inicie sesion para ver');
+			this.movieListService.getMovieListsByUser(this.userData.getId())
+			.then(movieLists => {this.dropDownMovieLists = movieLists;});
 		}
 
 }

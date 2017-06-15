@@ -34,42 +34,37 @@ var MovieListComponent = (function () {
     MovieListComponent.prototype.textReset = function () {
         this.nombreLista = "";
     };
-    //movielists de un user o de todos si es admin
+    //movielists de un user
     MovieListComponent.prototype.verListas = function () {
         var _this = this;
         this.actoresFavoritos = null;
         this.peliculasActoresFavoritos = null;
-        if (this.userData.getId() > 0) {
-            if (this.userData.isAdmin()) {
-                //admin
-                this.movieListService.getMovieLists()
-                    .then(function (movieLists) {
-                    if (movieLists.length == 0) {
-                        _this.encontro = false;
-                    }
-                    else {
-                        _this.movieLists = movieLists;
-                        _this.encontro = true;
-                    }
-                });
+        this.movieListService.getMovieListsByUser(this.userData.getId())
+            .then(function (movieLists) {
+            if (movieLists.length == 0) {
+                _this.encontro = false;
             }
             else {
-                //User
-                this.movieListService.getMovieListsByUser(this.userData.getId())
-                    .then(function (movieLists) {
-                    if (movieLists.length == 0) {
-                        _this.encontro = false;
-                    }
-                    else {
-                        _this.movieLists = movieLists;
-                        _this.encontro = true;
-                    }
-                });
+                _this.movieLists = movieLists;
+                _this.encontro = true;
             }
-        }
-        else {
-            console.log('inicie sesion para ver');
-        }
+        });
+    };
+    //movielists de todos (admin mode)
+    MovieListComponent.prototype.verTodasListas = function () {
+        var _this = this;
+        this.actoresFavoritos = null;
+        this.peliculasActoresFavoritos = null;
+        this.movieListService.getMovieLists()
+            .then(function (movieLists) {
+            if (movieLists.length == 0) {
+                _this.encontro = false;
+            }
+            else {
+                _this.movieLists = movieLists;
+                _this.encontro = true;
+            }
+        });
     };
     //actores favoritos del usuario
     MovieListComponent.prototype.verActoresFavoritos = function () {
@@ -137,12 +132,14 @@ var MovieListComponent = (function () {
         this.idLista1 = null;
         this.idLista2 = null;
         this.movieListService.results = [];
-        if (this.userData.getId() > 0) {
+        if (this.userData.admin) {
             //console.log('user: ' + this.userData.getUsername() + 'id: ' + this.userData.getId());
-            this.movieListService.getMovieListsByUser(this.userData.getId())
+            this.movieListService.getMovieLists()
                 .then(function (movieLists) { _this.dropDownMovieLists = movieLists; });
         }
         else {
+            this.movieListService.getMovieListsByUser(this.userData.getId())
+                .then(function (movieLists) { _this.dropDownMovieLists = movieLists; });
         }
     };
     return MovieListComponent;

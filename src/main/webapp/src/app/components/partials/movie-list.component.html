@@ -13,7 +13,8 @@
 <hr style="color: #0056b2;" />	
 
 <h1>Listas</h1>
-<button (click)="verListas()" class="btn waves-effect black-text">Ver listas de peliculas</button>  
+<button (click)="verListas()" class="btn waves-effect black-text">Ver listas de peliculas</button>
+<button (click)="verTodasListas()" *ngIf="userData.admin" class="btn waves-effect black-text">Ver todas las listas</button>    
 <button (click)="verActoresFavoritos()" class="btn waves-effect black-text">Ver actores favoritos</button> 
 <button (click)="verPeliculasVariosActoresFavoritos()" class="btn waves-effect black-text">Ver peliculas con varios actores favoritos</button>
 
