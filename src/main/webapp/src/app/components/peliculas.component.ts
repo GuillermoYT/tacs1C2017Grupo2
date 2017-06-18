@@ -35,12 +35,12 @@ export class PeliculasComponent implements OnInit {
       this.actorService.getActorByString(this.searchString).then(actores => {this.actores = actores;});
     }
   }
-  
+
   //muestra las listas de un usuario
-  verListas(): void {	  
+  verListas(): void {
 	  this.movieListService.getMovieListsByUser(this.userData.getId()).then(movieLists => {this.movieLists = movieLists;});
   }
-  
+
   addToMovieList(idMovieList: number, idMovie: number): void {
 	  this.movieListService.addMovieToList(idMovieList ,idMovie);
 	  //Materialize.toast('Pelicula agregada', 2000) // 4000 is the duration of the toast
@@ -54,7 +54,7 @@ export class PeliculasComponent implements OnInit {
 
   ngOnInit(): void {
     this.getPeliculas();
-	if(this.userData.getId()>0){
+	if(this.userData.getId()!='0'){
 	    this.verListas();
 	}else{
 		console.log('inicie sesion para ver');

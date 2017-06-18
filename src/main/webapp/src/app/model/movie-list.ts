@@ -3,6 +3,6 @@ import { Pelicula } from './pelicula';
 export class MovieList {
 	id: string;
 	nombre: string;
-	ownerId: number;
+	ownerId: string;
 	listaPeliculas: Pelicula[];
 }

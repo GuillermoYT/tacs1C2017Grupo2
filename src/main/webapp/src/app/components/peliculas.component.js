@@ -53,7 +53,7 @@ var PeliculasComponent = (function () {
     };
     PeliculasComponent.prototype.ngOnInit = function () {
         this.getPeliculas();
-        if (this.userData.getId() > 0) {
+        if (this.userData.getId() != '0') {
             this.verListas();
         }
         else {

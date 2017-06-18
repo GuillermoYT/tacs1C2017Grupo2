@@ -19,7 +19,7 @@ var MovieListComponent = (function () {
     //crear lista de peliculas
     MovieListComponent.prototype.crearClick = function () {
         var _this = this;
-        if (this.userData.getId() > 0) {
+        if (this.userData.getId() != '0') {
             if (this.nombreLista != '') {
                 this.movieListService.createMovieList(this.nombreLista, this.userData.getId());
                 this.nombreLista = "Lista creada exitosamente";
@@ -71,7 +71,7 @@ var MovieListComponent = (function () {
         var _this = this;
         this.movieLists = null;
         this.peliculasActoresFavoritos = null;
-        if (this.userData.getId() > 0) {
+        if (this.userData.getId() != '0') {
             //Para user: asignar user logueado
             this.movieListService.getActoresFavoritos(this.userData.getId())
                 .then(function (actores) {
@@ -93,7 +93,7 @@ var MovieListComponent = (function () {
         var _this = this;
         this.movieLists = null;
         this.actoresFavoritos = null;
-        if (this.userData.getId() > 0) {
+        if (this.userData.getId() != '0') {
             this.movieListService.getPeliculasVariosActoresFavoritos(this.userData.getId())
                 .then(function (peliculas) {
                 if (peliculas.length == 0) {

@@ -4,11 +4,11 @@ import { Injectable } from '@angular/core';
 export class UserData {
   username: string;
   token: string;
-  id: number;
+  id: string;
   admin: boolean;
 
   constructor() {
-    this.setId(0);
+    this.setId('0');
   }
 
   setToken(unString: string): void {
@@ -19,7 +19,7 @@ export class UserData {
     this.username = unNombre;
   }
 
-  setId(numero: number): void {
+  setId(numero: string): void {
     this.id = numero;
   }
 
@@ -35,7 +35,7 @@ export class UserData {
     return this.username;
   }
 
-  getId(): number {
+  getId(): string {
     return this.id;
   }
 
@@ -47,6 +47,6 @@ export class UserData {
     this.token = null;
     this.username = null;
     this.admin = false;
-    this.id = 0;
+    this.id = '0';
   }
 }

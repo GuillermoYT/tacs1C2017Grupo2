@@ -16,7 +16,7 @@ export class MovieListService {
 
 	baseUrl = 'http://ruta-rest-tacs.7e14.starter-us-west-2.openshiftapps.com';
 
-  createMovieList(nombre: string, user: number){
+  createMovieList(nombre: string, user: string){
 	  let headers = new Headers({ 'Content-Type': 'application/json;charset=utf-8' });
 	  let options = new RequestOptions({ headers: headers });
 	  let url = this.baseUrl+`/movielists?user=${user}`;
@@ -64,7 +64,7 @@ export class MovieListService {
   }
 
   //devuelve las movielists de un user
-  getMovieListsByUser(ownerId: number): Promise<MovieList[]>{
+  getMovieListsByUser(ownerId: string): Promise<MovieList[]>{
 	let url = this.baseUrl+`/movielists/search?ownerId=${ownerId}`;
 		return this.http.get(url)
 			      .toPromise()
@@ -73,7 +73,7 @@ export class MovieListService {
   }
 
   //devuelve los actores favoritos de un user
-  getActoresFavoritos(userId: number): Promise<ActorFavorito[]>{
+  getActoresFavoritos(userId: string): Promise<ActorFavorito[]>{
 	let url = this.baseUrl+`/usuarios/${userId}/actoresFavoritos`;
 		return this.http.get(url)
 			      .toPromise()
@@ -82,7 +82,7 @@ export class MovieListService {
   }
 
   //devuelve las peliculas con mas de un actor favorito de un user
-  getPeliculasVariosActoresFavoritos(userId: number): Promise<Pelicula[]>{
+  getPeliculasVariosActoresFavoritos(userId: string): Promise<Pelicula[]>{
 	  let url = this.baseUrl+`/peliculas/actoresFavoritos/${userId}`;
 			return this.http.get(url)
 				      .toPromise()

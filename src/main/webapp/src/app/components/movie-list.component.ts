@@ -22,7 +22,7 @@ export class MovieListComponent implements OnInit {
 
 //crear lista de peliculas
 crearClick(): void {
-	if(this.userData.getId()>0){
+	if(this.userData.getId()!='0'){
 		if(this.nombreLista!=''){
 			this.movieListService.createMovieList(this.nombreLista, this.userData.getId());
 			this.nombreLista = "Lista creada exitosamente";
@@ -72,7 +72,7 @@ verActoresFavoritos(): void {
 	this.movieLists = null;
 	this.peliculasActoresFavoritos = null;
 
-	if(this.userData.getId()>0){
+	if(this.userData.getId()!='0'){
 		//Para user: asignar user logueado
 		this.movieListService.getActoresFavoritos(this.userData.getId())
 			.then(actores => {if(actores.length==0){
@@ -92,7 +92,7 @@ verPeliculasVariosActoresFavoritos(): void{
 	this.movieLists = null;
 	this.actoresFavoritos = null;
 
-	if(this.userData.getId()>0){
+	if(this.userData.getId()!='0'){
 		this.movieListService.getPeliculasVariosActoresFavoritos(this.userData.getId())
 		.then(peliculas => {if(peliculas.length == 0){
 								this.encontro=false;

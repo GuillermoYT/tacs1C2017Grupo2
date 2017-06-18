@@ -23,7 +23,7 @@ var UsuarioDetailComponent = (function () {
     UsuarioDetailComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.route.params
-            .switchMap(function (params) { return _this.usuarioService.getUsuario(+params['id']); })
+            .switchMap(function (params) { return _this.usuarioService.getUsuario(params['id']); })
             .subscribe(function (usuario) { return _this.usuario = usuario; });
     };
     UsuarioDetailComponent.prototype.goBack = function () {
@@ -37,7 +37,7 @@ var UsuarioDetailComponent = (function () {
 UsuarioDetailComponent = __decorate([
     core_1.Component({
         selector: 'usuario-detail',
-        template: "\n    <div *ngIf=\"usuario\">\n            <h2>{{usuario.name}} Detalle de {{usuario.username}}</h2>\n        <div>\n            <label>id: </label>{{usuario.id}}\n        </div>\n        \n        <div>\n            <label>Nombre: </label> {{usuario.username}}\n        </div>\n\n        <div>\n            <label>Cantidad de Listas: </label> {{usuario.listaMovieList.length}}\n        </div>\n\n        <div>\n            <label> Cantidad de Actores Favoritos: </label> {{usuario.actoresFavoritos.length}}\n        </div>\n\n        <div>\n            <label> Ultima Sesion: </label> {{usuario.ultimaSesion | date:'medium' }}\n        </div>\n        <div>\n            <div *ngFor=\"let movieList of usuario.listaMovieList\">\n            <label> Detalle de Lista: </label> \n            <span>{{movieList.nombre}}</span>\n                <li *ngFor=\"let pelicula of movieList.listaPeliculas\">\n                <label> Detalle de Pelicula: </label> \n                <span>{{pelicula.nombre}}</span>\n                </li>\n            </div>\n        </div>\n        <button (click)=\"volver()\">Volver</button>\n    </div>\n    ",
+        template: "\n    <div *ngIf=\"usuario\">\n            <h2>{{usuario.name}} Detalle de {{usuario.username}}</h2>\n        <div>\n            <label>id: </label>{{usuario.id}}\n        </div>\n\n        <div>\n            <label>Nombre: </label> {{usuario.username}}\n        </div>\n\n        <div>\n            <label>Cantidad de Listas: </label> {{usuario.listaMovieList.length}}\n        </div>\n\n        <div>\n            <label> Cantidad de Actores Favoritos: </label> {{usuario.actoresFavoritos.length}}\n        </div>\n\n        <div>\n            <label> Ultima Sesion: </label> {{usuario.ultimaSesion | date:'medium' }}\n        </div>\n        <div>\n            <div *ngFor=\"let movieList of usuario.listaMovieList\">\n            <label> Detalle de Lista: </label>\n            <span>{{movieList.nombre}}</span>\n                <li *ngFor=\"let pelicula of movieList.listaPeliculas\">\n                <label> Detalle de Pelicula: </label>\n                <span>{{pelicula.nombre}}</span>\n                </li>\n            </div>\n        </div>\n        <button (click)=\"volver()\">Volver</button>\n    </div>\n    ",
         styles: ["\n\n    "]
     }),
     __metadata("design:paramtypes", [usuario_service_1.UsuarioService,

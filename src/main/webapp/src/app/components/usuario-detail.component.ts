@@ -15,7 +15,7 @@ import { SummaryActor } from '../model/summary-actor';
         <div>
             <label>id: </label>{{usuario.id}}
         </div>
-        
+
         <div>
             <label>Nombre: </label> {{usuario.username}}
         </div>
@@ -33,10 +33,10 @@ import { SummaryActor } from '../model/summary-actor';
         </div>
         <div>
             <div *ngFor="let movieList of usuario.listaMovieList">
-            <label> Detalle de Lista: </label> 
+            <label> Detalle de Lista: </label>
             <span>{{movieList.nombre}}</span>
                 <li *ngFor="let pelicula of movieList.listaPeliculas">
-                <label> Detalle de Pelicula: </label> 
+                <label> Detalle de Pelicula: </label>
                 <span>{{pelicula.nombre}}</span>
                 </li>
             </div>
@@ -61,7 +61,7 @@ export class UsuarioDetailComponent implements OnInit {
 
     ngOnInit(): void {
         this.route.params
-            .switchMap((params: Params) => this.usuarioService.getUsuario(+params['id']))
+            .switchMap((params: Params) => this.usuarioService.getUsuario(params['id']))
             .subscribe(usuario => this.usuario = usuario);
     }
 

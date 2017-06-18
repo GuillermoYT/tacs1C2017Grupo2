@@ -2,7 +2,7 @@ import { SummaryActor } from './summary-actor';
 import { Rol } from './rol';
 
 export class Usuario {
-  id: number;
+  id: string;
   username: string;
   password: string;
   rol: Rol;

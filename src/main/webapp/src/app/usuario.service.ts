@@ -68,7 +68,7 @@ export class UsuarioService {
             .catch(this.handleError);
     }
 
-    getUsuario(id: number): Promise<UsuarioDetail> {
+    getUsuario(id: string): Promise<UsuarioDetail> {
         let url = this.baseUrl+`/usuarios/${id}`;
         return this.http.get(url)
             .toPromise()
@@ -76,7 +76,7 @@ export class UsuarioService {
             .catch(this.handleError);
     }
 
-    getFavoritos(id: number): Promise<SummaryActor[]> {
+    getFavoritos(id: string): Promise<SummaryActor[]> {
         let url = this.baseUrl+`/usuarios/${id}/actoresFavoritos`;
         return this.http.get(url)
             .toPromise()

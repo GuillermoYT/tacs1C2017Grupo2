@@ -11,7 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var UserData = (function () {
     function UserData() {
-        this.setId(0);
+        this.setId('0');
     }
     UserData.prototype.setToken = function (unString) {
         this.token = unString;
@@ -41,7 +41,7 @@ var UserData = (function () {
         this.token = null;
         this.username = null;
         this.admin = false;
-        this.id = 0;
+        this.id = '0';
     };
     return UserData;
 }());
