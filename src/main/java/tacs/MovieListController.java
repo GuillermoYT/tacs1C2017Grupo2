@@ -33,7 +33,7 @@ public class MovieListController extends AbstractController{
 
 	// Crear lista
 	@RequestMapping(method=RequestMethod.POST)
-	public Response  createMovielist(@RequestBody String nombre, @RequestParam("user") long ownerId){
+	public Response  createMovielist(@RequestBody String nombre, @RequestParam("user") String ownerId){
 		logger.info("createMovieList()");
 		
 		try {

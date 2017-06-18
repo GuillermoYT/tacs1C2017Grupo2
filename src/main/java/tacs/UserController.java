@@ -36,11 +36,11 @@ public class UserController extends AbstractController{
 		Usuario julio = new UsuarioBuilder("Julio").pass("1234").rol(new Rol("Administrador")).build();
 		Usuario jon = new UsuarioBuilder("Jon").pass("1234").rol(new Rol("Administrador")).build();
 		
-		guille.setId(0);
-		alvaro.setId(1);
-		martin.setId(2);
-		julio.setId(3);
-		jon.setId(4);
+//		guille.setId(0);
+//		alvaro.setId(1);
+//		martin.setId(2);
+//		julio.setId(3);
+//		jon.setId(4);
 		
 		repo.save(martin);
 		repo.save(guille);

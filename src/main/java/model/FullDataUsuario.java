@@ -15,7 +15,7 @@ import tacs.MovieListRepository;
 public class FullDataUsuario {
 
     private List<MovieList> listaMovieList;
-    private Long id;
+    private String id;
     private String username;
     private String password;
     private Rol rol;
@@ -26,7 +26,11 @@ public class FullDataUsuario {
     private MovieListRepository repoML;
 
     public FullDataUsuario(Usuario user) {
-        listaMovieList = repoML.findAll().stream().filter(movieList -> movieList.getOwnerId()==user.getId()).collect(Collectors.toList());
+    	try {
+    		listaMovieList = repoML.findAll().stream().filter(movieList -> movieList.getOwnerId()==user.getId()).collect(Collectors.toList());
+    	} catch(Exception e) {
+    		
+    	}
         id = user.getId();
         username = user.getUsername();
         password = user.getPassword();
@@ -40,7 +44,7 @@ public class FullDataUsuario {
         return this.listaMovieList;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 

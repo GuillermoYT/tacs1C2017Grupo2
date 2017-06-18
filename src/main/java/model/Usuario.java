@@ -18,7 +18,7 @@ import util.PassEncoder;
 public class Usuario implements UserDetails {
 	
 	@Id
-	private Long id;
+	private String id;
 	private String username;
 	private String password; //nota va a ser un salted hash a futuro?
 	private Rol rol;
@@ -26,7 +26,7 @@ public class Usuario implements UserDetails {
 	private Date ultimaSesion;
 
 	//CONSTRUCTOR
-	public Usuario(long unId, String unUser, String unaPass) {
+	public Usuario(String unId, String unUser, String unaPass) {
 		id = unId;
 		username = unUser;
 		password = PassEncoder.encriptarPassword(unaPass);
@@ -38,11 +38,11 @@ public class Usuario implements UserDetails {
 	}
 
 	//GETTERS and SETTERS
-	public long getId() {
+	public String getId() {
 		return id;
 	}
 	
-	public void setId(long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	

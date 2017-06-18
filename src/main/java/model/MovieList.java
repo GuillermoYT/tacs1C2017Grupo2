@@ -12,14 +12,14 @@ public class MovieList {
 	@Id
 	private String id;
 	private String nombre;
-	private Long ownerId; //Usuario
+	private String ownerId; //Usuario
 	private List<Pelicula> listaPeliculas;
 
 	public MovieList() {
 		listaPeliculas = new ArrayList<Pelicula>();
 	}
 	
-	public MovieList(String unNombre, Long unUserId) {
+	public MovieList(String unNombre, String unUserId) {
 		nombre = unNombre;
 		ownerId = unUserId;
 		listaPeliculas = new ArrayList<Pelicula>();
@@ -41,11 +41,11 @@ public class MovieList {
 	public List<Pelicula> getListaPeliculas() {
 		return listaPeliculas;
 	}
-	public Long getOwnerId() {
+	public String getOwnerId() {
 		return ownerId;
 	}
 
-	public void setUserId(long userId) {
+	public void setUserId(String userId) {
 		this.ownerId = userId;
 	}
 

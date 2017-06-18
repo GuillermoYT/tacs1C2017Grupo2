@@ -7,10 +7,10 @@ public class JwtAuthenticationResponse implements Serializable {
 	private static final long serialVersionUID = 1250166508152483573L;
 
     private final String token;
-    private final Long userId;
+    private final String userId;
     private final boolean esAdmin;
 
-    public JwtAuthenticationResponse(String token, Long unId, boolean unBool) {
+    public JwtAuthenticationResponse(String token, String unId, boolean unBool) {
         this.token = token;
         userId = unId;
         esAdmin = unBool;
@@ -20,7 +20,7 @@ public class JwtAuthenticationResponse implements Serializable {
         return this.token;
     }
     
-    public Long getId() {
+    public String getId() {
     	return this.userId;
     }
     
