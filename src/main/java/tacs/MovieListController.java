@@ -24,7 +24,7 @@ import model.Response;
 import util.LongsWrapper;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 @RequestMapping("/movielists")
 public class MovieListController extends AbstractController{
 	

@@ -23,7 +23,7 @@ import model.Pelicula;
 import util.General;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 @RequestMapping("/peliculas")
 public class MovieController extends AbstractController{
 	

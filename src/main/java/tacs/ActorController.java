@@ -26,7 +26,7 @@ import model.Usuario;
 import util.FavComparator;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 @RequestMapping("/actores")
 public class ActorController extends AbstractController {
 	
