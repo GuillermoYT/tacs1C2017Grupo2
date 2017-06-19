@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import tacs.MovieListRepository;
@@ -22,6 +24,8 @@ public class FullDataUsuario {
     private List<SummaryActor> actoresFavoritos;
     private Date ultimaSesion;
     
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
+    
     @Autowired
     private MovieListRepository repoML;
 
@@ -29,7 +33,9 @@ public class FullDataUsuario {
     	try {
     		listaMovieList = repoML.findAll().stream().filter(movieList -> movieList.getOwnerId()==user.getId()).collect(Collectors.toList());
     	} catch(Exception e) {
-    		
+    		listaMovieList = new ArrayList<MovieList>();
+    		logger.error(e.getMessage());
+    		e.printStackTrace();
     	}
         id = user.getId();
         username = user.getUsername();
