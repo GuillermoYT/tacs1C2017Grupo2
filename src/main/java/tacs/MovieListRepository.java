@@ -10,6 +10,6 @@ import model.MovieList;
 public interface MovieListRepository extends MongoRepository<MovieList, String> {
 
 	public MovieList findById(String id);
-	public List<MovieList> findByOwnerId(long ownerId);
+	public List<MovieList> findByOwnerId(String ownerId);
 	
 }

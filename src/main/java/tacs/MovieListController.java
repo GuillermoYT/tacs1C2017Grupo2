@@ -73,7 +73,7 @@ public class MovieListController extends AbstractController{
 
 	// Obtener listas de un usuario
 	@RequestMapping(value="/search",method=RequestMethod.GET)
-	public List<MovieList> getMovieListsByUser(@RequestParam("ownerId") long ownerId){
+	public List<MovieList> getMovieListsByUser(@RequestParam("ownerId") String ownerId){
 		logger.info("getMovieListsByUser()");
 		
 		//return RepoMoviesLists.getInstance().getMovieListByUser(ownerId);
