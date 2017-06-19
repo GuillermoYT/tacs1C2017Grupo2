@@ -7,6 +7,6 @@ import model.Usuario;
 public interface UsuarioRepository extends MongoRepository<Usuario, String> {
 
 	public Usuario findByUsername(String username);
-	public Usuario findById(long id);
+	public Usuario findById(String id);
 	
 }

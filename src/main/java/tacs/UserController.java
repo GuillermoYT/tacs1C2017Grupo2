@@ -60,7 +60,7 @@ public class UserController extends AbstractController{
 	
 	// Mostrar Detalle de un usuario
 	@RequestMapping(value="/{id}", method = RequestMethod.GET)
-	public FullDataUsuario getUsuarioById(@PathVariable("id") long id) throws UserNotFoundException {
+	public FullDataUsuario getUsuarioById(@PathVariable("id") String id) throws UserNotFoundException {
 		logger.info("getUsuarioById()");
 		FullDataUsuario userfull = new FullDataUsuario(repo.findById(id));
 		return userfull;
@@ -78,7 +78,7 @@ public class UserController extends AbstractController{
 
 	// es mi actor favorito
 	@RequestMapping(value = "/{usuario}/actorFavorito/{idActor}", method = RequestMethod.GET)
-	public BooleanObj esActorFavorito(@PathVariable("usuario") long id, @PathVariable("idActor") long idActor) throws UserNotFoundException {
+	public BooleanObj esActorFavorito(@PathVariable("usuario") String id, @PathVariable("idActor") long idActor) throws UserNotFoundException {
 		logger.info("esActorFacvorito()");
 		Usuario user;
 		//user = RepoUsuarios.getInstance().getUserById(id);
@@ -89,7 +89,7 @@ public class UserController extends AbstractController{
 	
 	// Lista de actores favoritos
 	@RequestMapping(value = "/{usuario}/actoresFavoritos", method = RequestMethod.GET)
-	public List<SummaryActor> getActoresFavoritos(@PathVariable("usuario") long id) {
+	public List<SummaryActor> getActoresFavoritos(@PathVariable("usuario") String id) {
 		logger.info("getActoresFacvoritos()");
 		List<SummaryActor> actoresFavoritos = new ArrayList<SummaryActor>();
 		Usuario user;
@@ -105,7 +105,7 @@ public class UserController extends AbstractController{
 	
 	// Marcar como favorito a un actor
 	@RequestMapping(value = "/{usuario}/favorito/{actor}", method = RequestMethod.PUT)
-	public Response addActorFavorito(@PathVariable("usuario") long usuario, @PathVariable("actor") long actor) {
+	public Response addActorFavorito(@PathVariable("usuario") String usuario, @PathVariable("actor") long actor) {
 		logger.info("addActorFavorito()"+ String.valueOf(actor));
 		
 		System.out.println("addActorFavorito()"+ String.valueOf(actor));
@@ -124,7 +124,7 @@ public class UserController extends AbstractController{
 	
 	// Desmarcar como favorito a un actor
 	@RequestMapping(value = "/{usuario}/favorito/{actor}", method = RequestMethod.DELETE)
-	public Response removeActorFavorito(@PathVariable("usuario") long usuario, @PathVariable("actor") long actor) {
+	public Response removeActorFavorito(@PathVariable("usuario") String usuario, @PathVariable("actor") long actor) {
 		logger.info("removeActorFavorito()");
 		try {
 //			RepoUsuarios.getInstance().getUserById(usuario).removeIdActorFavorito(controladorActores.getSumActorById(actor));

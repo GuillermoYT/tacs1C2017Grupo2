@@ -57,7 +57,7 @@ public class MovieController extends AbstractController{
 	
 	// Lista de peliculas con varios actores favoritos de un usuario
 	@RequestMapping(value="/actoresFavoritos/{usuario}", method=RequestMethod.GET)
-	public List<Pelicula> getMovie(@PathVariable("usuario") Long usuario) {
+	public List<Pelicula> getMovie(@PathVariable("usuario") String usuario) {
 		List<Pelicula> peliculasFavoritos = new ArrayList<Pelicula>();
 		List<Integer> listaTentativa = new ArrayList<Integer>();
 		
