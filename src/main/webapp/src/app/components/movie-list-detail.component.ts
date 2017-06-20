@@ -11,6 +11,9 @@ import { MovieListService } from './../movie-list.service';
 import { RankingActor } from './../model/RankingActor';
 
 import { UserData } from './../model/user-data';
+import { UsuarioDetail } from './../model/usuario-detail';
+import { UsuarioService } from './../usuario.service';
+
 
 @Component({
   selector:'movie-list-detail',
@@ -18,7 +21,7 @@ import { UserData } from './../model/user-data';
     <div *ngIf="movieList" class="center-align">
       <div class="card-panel teal lighten-2 black-text">
         <h2>{{movieList.nombre}} </h2>
-        <span *ngIf="userData.admin">Propietario: {{movieList.ownerId}}</span>
+        <span *ngIf="userData.admin">Propietario: {{ownerUsername}}</span>
       </div>
 
       <button (click)="verRankingMovieList(movieList.id)" class="btn waves-effect black-text">Ver Ranking Actores</button>
@@ -61,11 +64,17 @@ import { UserData } from './../model/user-data';
 export class MovieListDetailComponent implements OnInit {
   movieList: MovieList;
   ranking: RankingActor[];
+  ownerUsername: string;
 
   ngOnInit(): void {
+	this.owner = null;
+	this.ownerUsername="";
     this.route.params
       .switchMap((params: Params) => this.movieListService.getMovieList(params['id']))
-      .subscribe(movielist => {this.movieList = movielist;});
+      .subscribe(movielist => {
+    	  this.movieList = movielist;
+    	  this.usuarioService.getUsuario(movielist.ownerId).then(resp => this.ownerUsername=resp.username);
+      });
   }
 
   deleteMovieFromList(movielistId: string, movieId: number){
@@ -78,5 +87,10 @@ export class MovieListDetailComponent implements OnInit {
 	}
 
 
-  constructor(private movieListService: MovieListService, private route: ActivatedRoute, private location: Location, private userData: UserData) {}
+  constructor(
+		  private movieListService: MovieListService, 
+		  private route: ActivatedRoute, 
+		  private location: Location, 
+		  private userData: UserData,
+		  private usuarioService: UsuarioService) {}
 }
