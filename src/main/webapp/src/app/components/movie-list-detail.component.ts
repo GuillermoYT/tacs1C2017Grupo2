@@ -11,7 +11,6 @@ import { MovieListService } from './../movie-list.service';
 import { RankingActor } from './../model/RankingActor';
 
 import { UserData } from './../model/user-data';
-import { UsuarioDetail } from './../model/usuario-detail';
 import { UsuarioService } from './../usuario.service';
 
 
@@ -67,7 +66,6 @@ export class MovieListDetailComponent implements OnInit {
   ownerUsername: string;
 
   ngOnInit(): void {
-	this.owner = null;
 	this.ownerUsername="";
     this.route.params
       .switchMap((params: Params) => this.movieListService.getMovieList(params['id']))
