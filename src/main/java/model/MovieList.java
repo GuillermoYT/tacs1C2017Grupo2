@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.data.annotation.Id;
 
@@ -50,6 +51,12 @@ public class MovieList {
 	}
 
 	public void addPelicula(Pelicula p) {
+		//Tomo los distintos para no repetir peliculas
+		listaPeliculas = listaPeliculas
+			    .stream()
+			    .filter(peli -> !(peli.id==p.id))
+			    .collect(Collectors.toList());
+		
 		listaPeliculas.add(p);
 	}
 	
