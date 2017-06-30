@@ -43,7 +43,7 @@ public class TestPeliculas {
 				.andExpect(jsonPath("$.id").exists())
 				.andExpect(jsonPath("$.id").value(263115))
 				.andExpect(jsonPath("$.nombre").value("Logan"))
-				.andExpect(jsonPath("$.cast",hasSize(99)))
+				.andExpect(jsonPath("$.cast",hasSize(104)))
 				.andExpect(jsonPath("$.cast[0].name").value("Hugh Jackman"))
 				.andExpect(jsonPath("$.cast[1].name").value("Patrick Stewart"))
 				.andExpect(jsonPath("$.imagePath").value("http://image.tmdb.org/t/p/w300//9EXnebqbb7dOhONLPV9Tg2oh2KD.jpg"))
