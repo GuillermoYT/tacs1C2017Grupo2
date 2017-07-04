@@ -31,7 +31,9 @@ public class FullDataUsuario {
 
     public FullDataUsuario(Usuario user) {
     	try {
-    		listaMovieList = repoML.findAll().stream().filter(movieList -> movieList.getOwnerId()==user.getId()).collect(Collectors.toList());
+    		//TODO ver si con esto arregla la cantidad de listas en el openshift
+    		listaMovieList = repoML.findByOwnerId(user.getId());
+    		//listaMovieList = repoML.findAll().stream().filter(movieList -> movieList.getOwnerId()==user.getId()).collect(Collectors.toList());
     	} catch(Exception e) {
     		listaMovieList = new ArrayList<MovieList>();
     		logger.error(e.getMessage());
