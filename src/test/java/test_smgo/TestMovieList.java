@@ -4,18 +4,24 @@ import static org.junit.Assert.*;
 
 import java.util.Arrays;
 
+import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
-import tacs.MovieController;
 import tacs.MovieListController;
 import util.LongsWrapper;
 
 import org.junit.runners.MethodSorters;
+import org.mockito.MockitoAnnotations;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import model.MovieList;
 
-
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = { TestConfiguration.class })
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestMovieList {
 
@@ -23,6 +29,13 @@ public class TestMovieList {
 	private String user1 = "5947ef1eaa6a6600085bdc55"; //Guille
 	private String user2 = "5947ef1eaa6a6600085bdc56"; //Alvaro
 	private String movieList = "59482611c1a2010008e98ed6"; //Superheroes de Alvaro
+	
+	private RepoMoviesLists repoML = new RepoMoviesLists();
+	
+	@Before
+	public void setUp() {
+		ReflectionTestUtils.setField(controlMovieList, "repo", repoML);
+	}
 	
 	@Test
 	public void test01CreacionMovieLists() {		

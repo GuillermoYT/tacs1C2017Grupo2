@@ -1,7 +1,7 @@
 package tacs;
 
-import repos.RepoMoviesLists;
-import repos.RepoUsuarios;
+import test_smgo.RepoMoviesLists;
+import test_smgo.RepoUsuarios;
 
 public class ServiceLocator {
 

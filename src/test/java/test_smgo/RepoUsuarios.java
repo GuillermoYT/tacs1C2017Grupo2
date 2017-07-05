@@ -1,4 +1,4 @@
-package repos;
+package test_smgo;
 
 import java.util.ArrayList;
 import java.util.List;

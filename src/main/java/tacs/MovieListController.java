@@ -42,6 +42,7 @@ public class MovieListController extends AbstractController{
 			repo.insert(aMovieList);
 		}catch (Exception e){
 			logger.error("Error al crear lista: " + e.getMessage() + "\nCausado por: " + e.getCause());
+			e.printStackTrace();
 		}
 		return new Response(200, "Lista creada correctamente");
 	}
