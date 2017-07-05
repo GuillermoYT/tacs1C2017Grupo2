@@ -6,6 +6,8 @@ import { Location } from '@angular/common';
 import { UsuarioDetail } from '../model/usuario-detail';
 import { UsuarioService } from '../usuario.service';
 import { SummaryActor } from '../model/summary-actor';
+import { MovieListService } from '../movie-list.service';
+
 
 @Component({
     selector: 'usuario-detail',
@@ -21,26 +23,30 @@ import { SummaryActor } from '../model/summary-actor';
         </div>
 
         <div>
-            <label>Cantidad de Listas: </label> {{usuario.listaMovieList.length}}
-        </div>
-
-        <div>
             <label> Cantidad de Actores Favoritos: </label> {{usuario.actoresFavoritos.length}}
         </div>
-
+        
         <div>
-            <label> Ultima Sesion: </label> {{usuario.ultimaSesion | date:'medium' }}
+        	<label>Cantidad de Listas: </label> {{usuario.listaMovieList.length}}
         </div>
-        <div>
-            <div *ngFor="let movieList of usuario.listaMovieList">
-            <label> Detalle de Lista: </label>
-            <span>{{movieList.nombre}}</span>
+        <P>
+        <span>Listas: </span> 
+        <div>	
+            <ul *ngFor="let movieList of usuario.listaMovieList">
+            <span>+{{movieList.nombre}}</span>
                 <li *ngFor="let pelicula of movieList.listaPeliculas">
-                <label> Detalle de Pelicula: </label>
-                <span>{{pelicula.nombre}}</span>
-                </li>
-            </div>
+                <span>---{{pelicula.nombre}}</span>
+                </li>            
+            </ul>
         </div>
+        
+        <BR>
+       
+        <div>
+        	<label> Ultima Sesion: </label> {{usuario.ultimaSesion | date:'medium' }}
+        </div>
+    
+        <BR>
         <button (click)="volver()">Volver</button>
     </div>
     `,
@@ -56,13 +62,17 @@ export class UsuarioDetailComponent implements OnInit {
         private usuarioService: UsuarioService,
         private route: ActivatedRoute,
         private location: Location,
-        private router: Router
+        private router: Router,
+        private movieListService: MovieListService,
     ) { }
 
     ngOnInit(): void {
         this.route.params
             .switchMap((params: Params) => this.usuarioService.getUsuario(params['id']))
-            .subscribe(usuario => this.usuario = usuario);
+            .subscribe(usuario => {
+            	this.usuario = usuario;
+            	this.movieListService.getMovieListsByUser(usuario.id).then(resp => this.usuario.listaMovieList=resp);
+            });
     }
 
     goBack(): void {
