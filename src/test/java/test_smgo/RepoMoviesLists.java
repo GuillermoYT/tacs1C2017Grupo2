@@ -26,10 +26,14 @@ public class RepoMoviesLists implements MovieListRepository {
 		return instance;
 	}
 	
-	public void addMovieList(MovieList unMovieList) {
+	@SuppressWarnings("unchecked")
+	@Override
+	public MovieList insert(MovieList unMovieList) {
 		unMovieList.setId(counter.toString());
 		moviesLists.add(unMovieList);		
 		counter++;
+		
+		return unMovieList;
 	}
 	
 	@Override
@@ -65,12 +69,6 @@ public class RepoMoviesLists implements MovieListRepository {
 
 	@Override
 	public <S extends MovieList> List<S> findAll(Example<S> arg0, Sort arg1) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <S extends MovieList> S insert(S arg0) {
 		// TODO Auto-generated method stub
 		return null;
 	}

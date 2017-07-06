@@ -30,7 +30,7 @@ public class TestMovieList {
 	private String user2 = "5947ef1eaa6a6600085bdc56"; //Alvaro
 	private String movieList = "59482611c1a2010008e98ed6"; //Superheroes de Alvaro
 	
-	private RepoMoviesLists repoML = new RepoMoviesLists();
+	private RepoMoviesLists repoML = RepoMoviesLists.getInstance();
 	
 	@Before
 	public void setUp() {
