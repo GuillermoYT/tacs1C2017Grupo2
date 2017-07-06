@@ -11,12 +11,12 @@ public class TestConfiguration {
 	
 	@Bean
 	public UsuarioRepository usuarioRepository() {
-		return new RepoUsuarios();
+		return RepoUsuarios.getInstance();
 	}
 	
 	@Bean
 	public MovieListRepository movieListRepository() {
-		return new RepoMoviesLists();
+		return RepoMoviesLists.getInstance();
 	}
 	
 }

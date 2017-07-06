@@ -52,6 +52,18 @@ public class RepoMoviesLists implements MovieListRepository {
 	public List<MovieList> findAll() {
 		return moviesLists;
 	}
+	
+	@Override
+	public <S extends MovieList> S save(S movieList) {
+		
+		MovieList ml = findById(movieList.getId());
+		
+		if(ml != null) {
+			moviesLists.set(moviesLists.indexOf(ml), movieList);
+		}
+		
+		return movieList;
+	}
 
 	
 	//para que no rompa la interfaz, no se usan
@@ -135,12 +147,6 @@ public class RepoMoviesLists implements MovieListRepository {
 
 	@Override
 	public MovieList findOne(String arg0) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <S extends MovieList> S save(S arg0) {
 		// TODO Auto-generated method stub
 		return null;
 	}

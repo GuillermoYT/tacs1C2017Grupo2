@@ -14,6 +14,8 @@ import util.LongsWrapper;
 
 import org.junit.runners.MethodSorters;
 import org.mockito.MockitoAnnotations;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -28,7 +30,9 @@ public class TestMovieList {
 	private MovieListController controlMovieList = new MovieListController();
 	private String user1 = "5947ef1eaa6a6600085bdc55"; //Guille
 	private String user2 = "5947ef1eaa6a6600085bdc56"; //Alvaro
-	private String movieList = "59482611c1a2010008e98ed6"; //Superheroes de Alvaro
+	private String movieList = "1"; //Superheroes de Alvaro
+	
+	protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	private RepoMoviesLists repoML = RepoMoviesLists.getInstance();
 	
@@ -67,6 +71,7 @@ public class TestMovieList {
 		
 		//Pelicula agregada exitosamente, Response 200=ok
 		assertEquals(200,controlMovieList.addMovieToList(movieList, 2l).getStatus());
+		logger.info("Lista de peliculas: " + controlMovieList.getMovieListsByUser(user1).get(0).getListaPeliculas().size());
 
 		//La pelicula agregada tiene el id correcto
 		assertEquals(2, controlMovieList.getMovieListsByUser(user1).get(0).getListaPeliculas().get(0).getId());
