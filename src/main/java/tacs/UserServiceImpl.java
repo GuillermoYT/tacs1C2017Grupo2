@@ -28,7 +28,11 @@ public class UserServiceImpl implements UserDetailsService {
 			throw new UsernameNotFoundException(userName);
 		 Date time = new Date();
 		 usuario.setUltimaSesion(time);
-		return usuario;
+		 
+		 //Guarda la ultima sesion
+		 userRepo.save(usuario);
+		
+		 return usuario;
 	}
 
 }
