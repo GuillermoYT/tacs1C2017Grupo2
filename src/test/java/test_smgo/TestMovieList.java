@@ -30,7 +30,6 @@ public class TestMovieList {
 	private MovieListController controlMovieList = new MovieListController();
 	private String user1 = "5947ef1eaa6a6600085bdc55"; //Guille
 	private String user2 = "5947ef1eaa6a6600085bdc56"; //Alvaro
-	private String movieList = "1"; //Superheroes de Alvaro
 	
 	protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
@@ -66,32 +65,34 @@ public class TestMovieList {
 	@Test
 	public void test02AgregarPeliculas() {
 		
+		MovieList listaPelis = controlMovieList.getMovieListsByUser(user1).get(0);
+		
 		//La lista creada no tiene peliculas
-		assertEquals(0, controlMovieList.getMovieListsByUser(user1).get(0).getListaPeliculas().size());
+		assertEquals(0, listaPelis.getListaPeliculas().size());
 		
 		//Pelicula agregada exitosamente, Response 200=ok
-		assertEquals(200,controlMovieList.addMovieToList(movieList, 2l).getStatus());
-		logger.info("Lista de peliculas: " + controlMovieList.getMovieListsByUser(user1).get(0).getListaPeliculas().size());
+		assertEquals(200, controlMovieList.addMovieToList(listaPelis.getId(), 2l).getStatus());
 
 		//La pelicula agregada tiene el id correcto
-		assertEquals(2, controlMovieList.getMovieListsByUser(user1).get(0).getListaPeliculas().get(0).getId());
+		assertEquals(2, listaPelis.getListaPeliculas().get(0).getId());
 
 		//Agrego otra pelicula, Response 200=ok
-		assertEquals(200,controlMovieList.addMovieToList(movieList, 3l).getStatus());
+		assertEquals(200,controlMovieList.addMovieToList(listaPelis.getId(), 3l).getStatus());
 
 		//Hay dos peliculas en la lista
-		assertEquals(2, controlMovieList.getMovieList(movieList).getListaPeliculas().size());
+		assertEquals(2, listaPelis.getListaPeliculas().size());
 	}
 	
 	@Test
 	public void test03ConsultarLista() {
 		//Long id=1l;
+		MovieList listaPelis = controlMovieList.getMovieList("1");
 		
 		//Verifico que me devuelva una lista
-		assertEquals(MovieList.class, controlMovieList.getMovieList(movieList).getClass());
+		assertEquals(MovieList.class, controlMovieList.getMovieList(listaPelis.getId()).getClass());
 		
 		//Obtengo la lista con el id que pedi
-		assertEquals(movieList, controlMovieList.getMovieList(movieList).getId());
+		assertEquals("1", listaPelis.getId());
 
 	}
 
@@ -99,20 +100,22 @@ public class TestMovieList {
 	@Test
 	public void test04EliminarPeliculas() {
 		
+		String movieListId = "1";
+		
 		//Hay dos peliculas en la lista
-		assertEquals(2, controlMovieList.getMovieList(movieList).getListaPeliculas().size());
+		assertEquals(2, controlMovieList.getMovieList(movieListId).getListaPeliculas().size());
 		
 		LongsWrapper ids = new LongsWrapper();
 		ids.setIds(Arrays.asList(2l));
 
 		//Elimino pelicula id:2 de lista id:1
-		assertEquals(200, controlMovieList.deleteMovieFromUserListById(movieList, ids).getStatus());
+		assertEquals(200, controlMovieList.deleteMovieFromUserListById(movieListId, ids).getStatus());
 
 		//Hay una pelicula en la lista
-		assertEquals(1, controlMovieList.getMovieList(movieList).getListaPeliculas().size());
+		assertEquals(1, controlMovieList.getMovieList(movieListId).getListaPeliculas().size());
 
 		//Se borró la pelicula con el id:2 correspondiente
-		assertNotEquals(2, controlMovieList.getMovieList(movieList).getListaPeliculas().get(0).getId());
+		assertNotEquals(2, controlMovieList.getMovieList(movieListId).getListaPeliculas().get(0).getId());
 	}
 	
 	/*

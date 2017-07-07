@@ -59,6 +59,7 @@ public class MovieListController extends AbstractController{
 			logger.info("addMovieList()");
 		}catch (Exception e){
 			logger.error("Usuario inexistente");
+			e.printStackTrace();
 		}
 		return new Response(200, "Pelicula agregada correctamente");
 	}

@@ -38,13 +38,13 @@ public class RepoMoviesLists implements MovieListRepository {
 	
 	@Override
 	public  MovieList findById(String idMovieList){
-		Optional<MovieList> lista = moviesLists.stream().filter(ml -> ml.getId()==idMovieList).findFirst();
+		Optional<MovieList> lista = moviesLists.stream().filter(ml -> ml.getId().equals(idMovieList)).findFirst();
 		return lista.isPresent() ? lista.get() : null;
 	}
 	
 	@Override
 	public  List<MovieList> findByOwnerId(String ownerId){
-		List<MovieList> listas = moviesLists.stream().filter(ml -> ml.getOwnerId()==ownerId).collect(Collectors.toList());;
+		List<MovieList> listas = moviesLists.stream().filter(ml -> ml.getOwnerId().equals(ownerId)).collect(Collectors.toList());;
 		return listas;
 	}
 	
