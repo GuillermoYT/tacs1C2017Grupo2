@@ -21,6 +21,9 @@ export class PeliculasComponent implements OnInit {
 
   queBuscarRadio: number;
 
+	loading = false;
+
+
   getPeliculas(): void {
     this.peliculaService.getMovies().then(movies => {this.movies = movies;});
   }
@@ -44,6 +47,7 @@ export class PeliculasComponent implements OnInit {
   addToMovieList(idMovieList: number, idMovie: number): void {
 	  this.movieListService.addMovieToList(idMovieList ,idMovie);
 	  //Materialize.toast('Pelicula agregada', 2000) // 4000 is the duration of the toast
+	  this.loading = true;
   }
 
   searchReset(): void {

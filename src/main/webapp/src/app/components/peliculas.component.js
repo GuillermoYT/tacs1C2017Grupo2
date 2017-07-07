@@ -19,6 +19,7 @@ var PeliculasComponent = (function () {
         this.actorService = actorService;
         this.movieListService = movieListService;
         this.userData = userData;
+        this.loading = false;
     }
     PeliculasComponent.prototype.getPeliculas = function () {
         var _this = this;
@@ -45,6 +46,7 @@ var PeliculasComponent = (function () {
     PeliculasComponent.prototype.addToMovieList = function (idMovieList, idMovie) {
         this.movieListService.addMovieToList(idMovieList, idMovie);
         //Materialize.toast('Pelicula agregada', 2000) // 4000 is the duration of the toast
+        this.loading = true;
     };
     PeliculasComponent.prototype.searchReset = function () {
         this.movies = this.baseMovies;
