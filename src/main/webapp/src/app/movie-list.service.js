@@ -19,6 +19,7 @@ var MovieListService = (function () {
         this.baseUrl = 'http://ruta-rest-tacs.7e14.starter-us-west-2.openshiftapps.com';
         this.results = [];
         this.loading = false;
+        this.encontro = true;
     }
     MovieListService.prototype.createMovieList = function (nombre, user) {
         var headers = new http_1.Headers({ 'Content-Type': 'application/json;charset=utf-8' });
@@ -93,6 +94,12 @@ var MovieListService = (function () {
                 .toPromise()
                 .then(function (res) {
                 _this.results = res.json();
+                if (_this.results.length == 0) {
+                    _this.encontro = false;
+                }
+                else {
+                    _this.encontro = true;
+                }
                 resolve();
             }, function (msg) {
                 reject(msg);

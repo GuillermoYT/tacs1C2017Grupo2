@@ -12,6 +12,7 @@ import { RankingActor } from './model/RankingActor';
 @Injectable()
 export class MovieListService {
 	results:Object[];
+	encontro:boolean;
 	loading:boolean;
 
 	baseUrl = 'http://ruta-rest-tacs.7e14.starter-us-west-2.openshiftapps.com';
@@ -99,6 +100,11 @@ export class MovieListService {
 		      .then(
 		        res => { // Success
 		          this.results = res.json() as Pelicula[];
+		          if(this.results.length==0){
+		        	  this.encontro=false;
+		          }else{
+		        	  this.encontro=true;
+		          }
 		          resolve();
 		        },
 		        msg =>{ //Error
@@ -132,5 +138,6 @@ export class MovieListService {
   constructor(private http: Http) {
 	  this.results = [];
 	  this.loading = false;
+	  this.encontro = true;
   }
 }
