@@ -1,11 +1,8 @@
 package test_smgo;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
 
 import java.util.Date;
-import java.util.List;
 
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -18,13 +15,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
 import creacionales.UsuarioBuilder;
 import model.Rol;
-import model.SummaryActor;
 import model.Usuario;
-import tacs.LoginController;
-import tacs.MovieListController;
 import tacs.UserController;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -33,7 +26,7 @@ import tacs.UserController;
 public class TestUsuario {
 
 	private UserController userController = new UserController();
-	private LoginController control = new LoginController();
+
 	protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	private RepoUsuarios repoU = RepoUsuarios.getInstance();
