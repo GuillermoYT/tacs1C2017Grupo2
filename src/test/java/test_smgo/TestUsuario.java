@@ -37,7 +37,7 @@ public class TestUsuario {
 	}
 	
 	@Test
-	public void test01CreacionMovieLists() {		
+	public void testCreacionMovieLists() {		
 
 		Usuario pepe = new UsuarioBuilder("Pepe").pass("1234").rol(new Rol("Usuario")).build();
 		//Crear Usuario Pepe
@@ -46,19 +46,23 @@ public class TestUsuario {
 		//Lista de Favoritos vacia
 		assertEquals(0, userController.getActoresFavoritos(repoU.findByUsername("Pepe").getId()).size());
 
+	}
+
+	@Test
+	public void testMarcarActorFavorito() {		
 		//Agregar Actor Favorito con id:10 para usuario pepe, response 200=ok
 		assertEquals(200, userController.addActorFavorito(repoU.findByUsername("Pepe").getId(), 10).getStatus());
 
 		//Verificar que user: Pepe tiene como Actor Favorito con id:10
-		assertEquals(true, repoU.findByUsername("Pepe").getIdsActoresFavoritos().stream().anyMatch(fv -> fv.getId() == 10));
+		assertEquals(true, repoU.findByUsername("Pepe").getIdsActoresFavoritos().stream().anyMatch(fv -> fv.getId() == 10));	
+	}
 
+	@Test
+	public void testDesmarcarActorFavorito() {		
 		//Desmarcar Actor Favorito con id:10 para usuario pepe, response 200=ok
 		assertEquals(200, userController.removeActorFavorito(repoU.findByUsername("Pepe").getId(), 10).getStatus());
 
 		//Verificar que user: Pepe NO tiene como Actor Favorito con id:10
 		assertEquals(false, repoU.findByUsername("Pepe").getIdsActoresFavoritos().stream().anyMatch(fv -> fv.getId() == 10));
-
 	}
-	
-
 }
