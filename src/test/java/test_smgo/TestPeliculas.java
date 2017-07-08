@@ -1,19 +1,25 @@
 package test_smgo;
 
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 
 import creacionales.UsuarioBuilder;
+import model.Pelicula;
 import model.Rol;
 import model.Usuario;
 
@@ -22,18 +28,22 @@ import tacs.MovieController;
 import tacs.UserController;
 public class TestPeliculas {
 
-	private MockMvc mockMvc;
-
-	private RepoUsuarios repoU = RepoUsuarios.getInstance();
-	
 	private UserController userController = new UserController();
-	
+	private ActorController actorController = new ActorController();
+	private MovieController movieController = new MovieController();
+	protected final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+	private MockMvc mockMvc;
+	private RepoUsuarios repoU = RepoUsuarios.getInstance();
+
 	@Before
-	public void setup() {
+	public void setUp() {
 		this.mockMvc = standaloneSetup(new MovieController()).build();
 		ReflectionTestUtils.setField(userController, "repo", repoU);
+		ReflectionTestUtils.setField(actorController, "userRepo", repoU);
+		ReflectionTestUtils.setField(movieController, "userRepo", repoU);
 	}
-
+	
 	/*
 	 * Como usuario quiero poder ver el detalle de una película. 
 	 * 		Imágenes.     
@@ -72,21 +82,18 @@ public class TestPeliculas {
 	}
 
 	
+	//Como usuario quiero ver si hay películas donde esté más de uno de mis actores favoritos.
 	@Test
 	public void testGetMovieByActorsFavorites() throws Exception {
-		Rol usr = new Rol("Usuario");
+		Usuario Tito = new UsuarioBuilder("Tito").pass("1234").rol(new Rol("Usuario")).build();
+		userController.addUser(Tito).getStatus();
 		
-		Usuario guille = new UsuarioBuilder("Guille").pass("1234").rol(usr).build();
-		userController.addUser(guille);
+		repoU.findByUsername("Tito").addIdActorFavorito(actorController.getSumActorById(1240693));
+		repoU.findByUsername("Tito").addIdActorFavorito(actorController.getSumActorById(6384));
+		repoU.findByUsername("Tito").addIdActorFavorito(actorController.getSumActorById(1331));
 
-		ActorController ac = new ActorController();
+		List<Pelicula> mvs = movieController.getMovie(repoU.findByUsername("Tito").getId());
 		
-		repoU.findById(guille.getId()).addIdActorFavorito(ac.getSumActorById(1240693));
-		repoU.findById(guille.getId()).addIdActorFavorito(ac.getSumActorById(6384));
-		repoU.findById(guille.getId()).addIdActorFavorito(ac.getSumActorById(1331));
-		this.mockMvc.perform(get("/peliculas/actoresFavoritos/{usuario}", guille.getId()).accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
-				.andExpect(status().isOk())
-            	.andExpect(jsonPath("$",hasSize(5)))				
-				.andDo(print());
+		assertEquals(5, mvs.size());
 	}
 }
