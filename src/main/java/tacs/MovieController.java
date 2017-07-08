@@ -59,9 +59,9 @@ public class MovieController extends AbstractController{
 	@RequestMapping(value="/actoresFavoritos/{usuario}", method=RequestMethod.GET)
 	public List<Pelicula> getMovie(@PathVariable("usuario") String usuario) {
 		List<Pelicula> peliculasFavoritos = new ArrayList<Pelicula>();
-		List<Integer> listaTentativa = new ArrayList<Integer>();
-		
+		List<MovieCastResult> resultadoRequests = new ArrayList<MovieCastResult>();		
 		List<Integer> idsActoresFavoritosList = new ArrayList<Integer>();
+
 		try {
 			userRepo.findById(usuario).getIdsActoresFavoritos().forEach((af)->idsActoresFavoritosList.add(af.getId()));
 		} catch(Exception e) {
@@ -69,21 +69,17 @@ public class MovieController extends AbstractController{
 		}
 		
 
-		ActorCastResult resultadoRequest;
-		for (Integer id : idsActoresFavoritosList) {
-			logger.info("Request: " + BASE_URL + "/person/" + id + "/movie_credits?" + API_KEY);
-			resultadoRequest = api.getForObject(BASE_URL + "/person/" + id + "/movie_credits?" + API_KEY, ActorCastResult.class);
-			for(MovieCastResult m : resultadoRequest.getCast()) {
-				listaTentativa.add(m.getId());
-			}
-		}
-		
-		Set<Integer> peliculasDondeHayMasDeUno = General.findDuplicateIntegers(listaTentativa);
+		idsActoresFavoritosList.stream().map(id -> api.getForObject(BASE_URL + "/person/" + id + "/movie_credits?" + API_KEY, ActorCastResult.class))
+										.map(ac -> ac.getCast())
+										.forEach(cast -> {
+											resultadoRequests.addAll(cast);
+		});
 
-		for(Integer p : peliculasDondeHayMasDeUno) {
-			logger.info("Se agrega pelicula: " + p + "/" + p.longValue());
-			peliculasFavoritos.add(getPeliculaById(p.longValue())); 
-		}
+		List<MovieCastResult> result = General.findDuplicateIntegers(resultadoRequests);
+		
+		result.stream().forEach(mr -> {
+			peliculasFavoritos.add(getPeliculaById((long)mr.getId()));
+		});
 		
 		return peliculasFavoritos;
 	}
