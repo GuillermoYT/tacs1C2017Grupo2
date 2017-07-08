@@ -25,7 +25,7 @@ import util.BooleanObj;
 public class UserController extends AbstractController{
 	
 	@Autowired
-	private ActorController controladorActores;
+	private ActorController controladorActores = new ActorController();
 	
 	@Autowired
 	private UsuarioRepository repo;
