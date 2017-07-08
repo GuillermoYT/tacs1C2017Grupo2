@@ -91,7 +91,7 @@ public class RepoUsuarios implements UsuarioRepository {
 
 	@Override
 	public <S extends Usuario> S insert(S arg0) {
-		// TODO Auto-generated method stub
+		this.addUsuario((Usuario)arg0);
 		return null;
 	}
 
