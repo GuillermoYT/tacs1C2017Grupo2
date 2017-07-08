@@ -1,8 +1,11 @@
 package test_smgo;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -17,7 +20,9 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 import creacionales.UsuarioBuilder;
 import model.Rol;
+import model.SummaryActor;
 import model.Usuario;
+import tacs.ActorController;
 import tacs.UserController;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -26,6 +31,7 @@ import tacs.UserController;
 public class TestUsuario {
 
 	private UserController userController = new UserController();
+	private ActorController actorController = new ActorController();
 
 	protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -34,6 +40,7 @@ public class TestUsuario {
 	@Before
 	public void setUp() {
 		ReflectionTestUtils.setField(userController, "repo", repoU);
+		ReflectionTestUtils.setField(actorController, "userRepo", repoU);		
 	}
 
 	@Test
@@ -91,4 +98,18 @@ public class TestUsuario {
 		//Verifica la ultima conexion
 		assertEquals(asignedLastSesion,repoU.findByUsername("Pepe").getUltimaSesion());
 	}
+	
+    //Como usuario quiero ver quienes son mis actores favoritos
+    @Test
+    public void testGetActoresFavoritos(){
+    	
+    	userController.addActorFavorito(repoU.findByUsername("Pepe").getId(), 10);
+    	userController.addActorFavorito(repoU.findByUsername("Pepe").getId(), 12);
+		
+		List<SummaryActor> listAux = new ArrayList<SummaryActor>();
+		listAux.add(actorController.getSumActorById(10));
+		listAux.add(actorController.getSumActorById(12));
+
+		assertTrue(repoU.findByUsername("Pepe").getIdsActoresFavoritos().containsAll(listAux));   	
+    }
 }
