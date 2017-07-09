@@ -30,7 +30,7 @@ public class LoginController extends AbstractController {
 	
 	@Value("${jwt.header}")
     private String tokenHeader;
-
+	
     @Autowired
     private AuthenticationManager authenticationManager;
 
