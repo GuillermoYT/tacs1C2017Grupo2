@@ -42,7 +42,8 @@ public class TestMovieList {
 	}
 	
 	@Test
-	public void test01CreacionMovieLists() {		
+	public void test01CreacionMovieLists() {
+		repoML.cleanRepo();
 		//No hay listas
 		assertEquals(0, controlMovieList.getList().size());
 

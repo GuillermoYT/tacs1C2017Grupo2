@@ -25,7 +25,13 @@ public class RepoMoviesLists implements MovieListRepository {
 		}
 		return instance;
 	}
-	
+
+	public void cleanRepo(){
+		instance=null;
+		moviesLists = new ArrayList<MovieList>();
+		counter = 1;
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public MovieList insert(MovieList unMovieList) {

@@ -34,7 +34,13 @@ public class RepoUsuarios implements UsuarioRepository {
 		usuarios.add(unUsuario);		
 		counter++;
 	}
-	
+
+	public void cleanRepo(){
+		instance = null;
+		usuarios = new ArrayList<Usuario>();
+		counter = 1;
+	}
+
 	public  Usuario buscarUsuario(String nombre, String pass) throws Exception{
 		List<Usuario> auxUsers = usuarios.stream().filter(usuario -> usuario.getUsername().toUpperCase().equals(nombre.toUpperCase()) && usuario.getPassword().equals(pass)).collect(Collectors.toList());
 		
