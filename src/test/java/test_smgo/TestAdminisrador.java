@@ -3,6 +3,7 @@ package test_smgo;
 import static org.junit.Assert.*;
 
 import java.util.Date;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -16,6 +17,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import creacionales.UsuarioBuilder;
+import model.FavoritoActor;
 import model.Rol;
 import model.Usuario;
 import tacs.ActorController;
@@ -96,18 +98,14 @@ public class TestAdminisrador {
 
 	//Como administrador quiero ver el ranking de actores favoritos de todos mis usuarios
 	//(los actores que han sido más veces elegidos como favoritos)
-//	@Test
-//	public void testRankingActoresFavoritos() throws Exception{
-//
-//		//utilizo el endpoint que me permite conocer los actores favoritos y
-//			//corroboro que conincide con los puestos a mano
-//
-//		this.mockMvc2 = standaloneSetup(new ActorController()).build();
-//
-//		this.mockMvc2.perform(get("/actores/rankingFavoritos").accept(MediaType.parseMediaType("application/json")))
-//				.andExpect(status().isOk())
-//				.andExpect(jsonPath("$[0].actor.id").value("3"))
-//				.andExpect(jsonPath("$[1].actor.id").value("4"))
-//				.andDo(print());
-//	}
+	@Test
+	public void testRankingActoresFavoritos() throws Exception{
+		
+		List<FavoritoActor> actoresFavoritosRanking = actorController.rankingActores();
+
+		//1° actor del ranking
+		assertEquals(3,actoresFavoritosRanking.get(0).getActor().getId());
+		//2° actor del ranking
+		assertEquals(4,actoresFavoritosRanking.get(1).getActor().getId());
+	}
 }

@@ -54,14 +54,15 @@ public class RepoUsuarios implements UsuarioRepository {
 	
 	@Override
 	public Usuario findById(String id) {
+		Usuario aux = null;
 		for(Usuario u : usuarios) {
-			if (u.getId() == (id)) {
-				return u;
+			if (u.getId().equals(id)) {
+				aux = u;
 			}
 		}
 		
 		//throw new UserNotFoundException("Usuario invalido.");
-		return null;
+		return aux;
 	}
 	
 	@Override
