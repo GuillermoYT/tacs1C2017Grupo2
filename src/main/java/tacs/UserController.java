@@ -32,9 +32,6 @@ public class UserController extends AbstractController{
 	
 	@Autowired
 	private UsuarioRepository repo;
-
-	@Autowired
-	private MovieListRepository repoML;
 	
 	@RequestMapping(value="/crearDb")
 	public String crearUsuarioDb() {
