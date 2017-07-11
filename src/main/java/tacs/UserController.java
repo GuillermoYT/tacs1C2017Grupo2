@@ -24,13 +24,17 @@ import util.BooleanObj;
 @RequestMapping("/usuarios")
 public class UserController extends AbstractController{
 
-	FullDataUsuario userfull;
+	@Autowired
+	private FullDataUsuario userfull;
 
 	@Autowired
 	private ActorController controladorActores = new ActorController();
 	
 	@Autowired
 	private UsuarioRepository repo;
+
+	@Autowired
+	private MovieListRepository repoML;
 	
 	@RequestMapping(value="/crearDb")
 	public String crearUsuarioDb() {
@@ -72,7 +76,7 @@ public class UserController extends AbstractController{
 				return userfull;
 			}
 		}
-		userfull = new FullDataUsuario(repo.findById(id));
+		userfull.reload(repo.findById(id));
 		return  userfull;
 
 	}

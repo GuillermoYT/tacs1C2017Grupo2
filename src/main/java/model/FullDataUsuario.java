@@ -29,7 +29,7 @@ public class FullDataUsuario {
     @Autowired
     private MovieListRepository repoML;
 
-    public FullDataUsuario(Usuario user) {
+    public void reload(Usuario user) {
     	try {
     		//TODO ver si con esto arregla la cantidad de listas en el openshift
     		listaMovieList = repoML.findByOwnerId(user.getId());
