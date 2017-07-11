@@ -23,7 +23,9 @@ import util.BooleanObj;
 @CrossOrigin(origins = "*")
 @RequestMapping("/usuarios")
 public class UserController extends AbstractController{
-	
+
+	FullDataUsuario userfull;
+
 	@Autowired
 	private ActorController controladorActores = new ActorController();
 	
@@ -64,8 +66,21 @@ public class UserController extends AbstractController{
 	@RequestMapping(value="/{id}", method = RequestMethod.GET)
 	public FullDataUsuario getUsuarioById(@PathVariable("id") String id) throws UserNotFoundException {
 		logger.info("getUsuarioById()");
-		FullDataUsuario userfull = new FullDataUsuario(repo.findById(id));
-		return userfull;
+
+//		if(userfull == null){
+//			userfull = new FullDataUsuario(repo.findById(id));
+//		}else if (!userfull.getId().equals(id)){	// Para salvar el null
+//			userfull = new FullDataUsuario(repo.findById(id));
+//		}
+
+		if(userfull!=null){
+			if(userfull.getId().equals(id)){
+				return userfull;
+			}
+		}
+		userfull = new FullDataUsuario(repo.findById(id));
+		return  userfull;
+
 	}
 	
 	// Crear nuevo usuario
