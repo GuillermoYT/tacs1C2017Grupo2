@@ -67,12 +67,6 @@ public class UserController extends AbstractController{
 	public FullDataUsuario getUsuarioById(@PathVariable("id") String id) throws UserNotFoundException {
 		logger.info("getUsuarioById()");
 
-//		if(userfull == null){
-//			userfull = new FullDataUsuario(repo.findById(id));
-//		}else if (!userfull.getId().equals(id)){	// Para salvar el null
-//			userfull = new FullDataUsuario(repo.findById(id));
-//		}
-
 		if(userfull!=null){
 			if(userfull.getId().equals(id)){
 				return userfull;
