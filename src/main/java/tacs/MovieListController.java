@@ -37,9 +37,9 @@ public class MovieListController extends AbstractController{
 		logger.info("createMovieList()");
 		
 		try {
-			//RepoMoviesLists.getInstance().addMovieList(aMovieList);
-			//Si ya esta creada, no hago nada 
-			if(repo.findByOwnerId(ownerId).stream().filter(ml -> ml.getNombre()==nombre).count()==0){
+			//Si el usuario no tiene listas con ese nombre, la agrego
+			if(getMovieListsByUser(ownerId).stream()
+	                .filter(ml -> nombre.equalsIgnoreCase(ml.getNombre())).count()==0){
 				MovieList aMovieList = new MovieList(nombre, ownerId);
 				repo.insert(aMovieList);
 			}

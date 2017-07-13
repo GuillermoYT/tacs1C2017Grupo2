@@ -58,9 +58,6 @@ var PeliculasComponent = (function () {
         if (this.userData.getId() != '0') {
             this.verListas();
         }
-        else {
-            console.log('inicie sesion para ver');
-        }
     };
     return PeliculasComponent;
 }());

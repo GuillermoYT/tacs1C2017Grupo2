@@ -29,9 +29,12 @@ var RegisterComponent = (function () {
         this.route.params
             .switchMap(function (params) { return _this.usuarioService.register(_this.usernamed, _this.passwordd); })
             .subscribe(function (result) {
-            if (result) {
+            if (result == 201) {
                 _this.alertService.success("Registrado satisfactoriamente");
                 _this.router.navigate(["login"]);
+            }
+            else if (result == 202) {
+                _this.error = "El nombre de usuario no se encuentra disponible";
             }
             else {
                 _this.error = "No se ha podido registrar. Intente mas tarde";

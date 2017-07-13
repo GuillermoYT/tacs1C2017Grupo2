@@ -82,10 +82,14 @@ public class UserController extends AbstractController{
 	@RequestMapping(method = RequestMethod.POST)
 	public Response addUser(@RequestBody Usuario user) {
 		logger.info("addUser()");
-		user.setRol(new Rol("Usuario"));
-		//RepoUsuarios.getInstance().addUsuario(user);
-		repo.insert(user);
-		return new Response(201, "El usuario " + user.getUsername() + " ha sido creado");
+		if(getUsuarios().stream().filter(u -> user.getUsername().equalsIgnoreCase(u.getUsername())).count()==0){
+			user.setRol(new Rol("Usuario"));
+			repo.insert(user);
+			return new Response(201, "El usuario " + user.getUsername() + " ha sido creado");
+		}else{
+			return new Response(202, "El nombre de usuario ya existe");
+		}
+		
 	}
 
 	// es mi actor favorito

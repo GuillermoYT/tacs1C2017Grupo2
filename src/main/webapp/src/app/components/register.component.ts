@@ -31,10 +31,12 @@ export class RegisterComponent {
         this.route.params
       .switchMap((params: Params) => this.usuarioService.register(this.usernamed, this.passwordd))
       .subscribe(result => {
-        if (result) {
+        if (result==201) {
           this.alertService.success("Registrado satisfactoriamente");
           this.router.navigate(["login"]);
-        } else {
+        } else if(result==202){
+          this.error = "El nombre de usuario no se encuentra disponible";
+        }else{
           this.error = "No se ha podido registrar. Intente mas tarde";
         }
       }, error => this.error = "No se ha podido registrar. Intente mas tarde");

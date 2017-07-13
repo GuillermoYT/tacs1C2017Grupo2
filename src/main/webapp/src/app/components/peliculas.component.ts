@@ -60,8 +60,6 @@ export class PeliculasComponent implements OnInit {
     this.getPeliculas();
 	if(this.userData.getId()!='0'){
 	    this.verListas();
-	}else{
-		console.log('inicie sesion para ver');
 	}
   }
 

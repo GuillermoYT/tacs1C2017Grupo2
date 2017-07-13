@@ -39,7 +39,7 @@ export class UsuarioService {
         .catch(this.handleError);
     }
 
-    register(username: string, password: string): Promise<boolean> {
+    register(username: string, password: string): Promise<number> {
       let url = this.baseUrl+'/usuarios';
       let headers = new Headers;
       headers.append('Content-Type', 'application/json');
@@ -52,9 +52,9 @@ export class UsuarioService {
         .then(response => {
           let respuesta = response.json();
           if (respuesta) {
-            return true;
+            return respuesta.status;
           } else {
-            return false;
+            return 500;
           }
         })
         .catch(this.handleError);
